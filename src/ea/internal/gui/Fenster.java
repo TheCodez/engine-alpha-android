@@ -45,11 +45,6 @@ public class Fenster extends Frame {
 	private static volatile int frameCount = 0;
 	
 	/**
-	 * Gibt an, ob das Fenster im Vollbildmodus arbeitet
-	 */
-	private final boolean vollbild;
-	
-	/**
 	 * Gibt an, ob die aktuelle (relative) Maus innerhalb des passablen
 	 * Fensterbereiches liegt.<br />
 	 * Gibt es keine solche ist dieser Wert irrelevant.
@@ -142,11 +137,10 @@ public class Fenster extends Frame {
 		int WINDOW_FULLSCREEN = 2;
 		int WINDOW_FULLSCREEN_FRAME = 4;
 		
-		int windowMode = vollbild ? WINDOW_FULLSCREEN : WINDOW_FRAME;
+		int windowMode = WINDOW_FRAME;
 		
 		tabelle = new boolean[45];
 		
-		this.vollbild = vollbild;
 		this.setSize(breite, hoehe);
 		this.setResizable(false);
 		
@@ -421,14 +415,6 @@ public class Fenster extends Frame {
 		setState(NORMAL);
 	}
 	
-	/**
-	 * Gibt zurueck, ob dieses Fenster ein Vollbild ist oder nicht.
-	 * 
-	 * @return <code>true</code>, wenn das Fenster ein Vollbild ist, sonst <code>false</code>.
-	 */
-	public boolean vollbild() {
-		return vollbild;
-	}
 	
 	/**
 	 * Meldet den hintergrund dieses Fensters und damit des Spiels an.<br />

@@ -19,19 +19,20 @@
 
 package ea;
 
-import ea.internal.collision.BoxCollider;
-import ea.internal.collision.Collider;
-import ea.internal.util.Logger;
-import ea.internal.util.Optimizer;
-
-import javax.imageio.ImageIO;
-
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.TexturePaint;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import ea.internal.collision.Collider;
+import ea.internal.util.Logger;
+import ea.internal.util.Optimizer;
 
 /**
  * Ein Bild als Grafische Repraesentation einer Bilddatei, die gezeichnet werden kann.
