@@ -22,6 +22,7 @@ package ea;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import ea.internal.collision.Collider;
 
 /**
@@ -120,7 +121,9 @@ public class Rechteck extends Geometrie {
 		
 		//g.setColor(super.formen()[0].getColor());
 		//g.fillRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge);
-		g.drawRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge, p);
+		RectF rect = new RectF(position.x, position.y, position.x + breite - 1, position.y + laenge - 1);
+		g.drawRect(rect, p);
+		//g.drawRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge, p);
 	}
 	
 	/**
