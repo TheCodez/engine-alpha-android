@@ -4,9 +4,9 @@
  */
 
 package ea;
-import java.awt.Graphics;
 
-import ea.internal.gui.Fenster;
+import android.graphics.Canvas;
+
 
 /**
  * Simple grafische Klassen bestehen nicht aus Flaechen. Sie haben nicht die vielfaeltigen
@@ -22,16 +22,16 @@ public abstract class SimpleGraphic {
      * @param dx Die X-Verschiebung der Kamera
      * @param dy Die Y-Verschiebung der Kamera
      */
-    public abstract void paint(Graphics g, int dx, int dy);
+    public abstract void paint(Canvas g, int dx, int dy);
 
     /**
      * Konstruktor initialisiert bereits die Darstellung.
      */
     public SimpleGraphic() {
-        Fenster.instanz().fillSimple(this);
+        //Fenster.instanz().fillSimple(this);
     }
 
     public void loeschen() {
-        Fenster.instanz().removeSimple(this);
+        //Fenster.instanz().removeSimple(this);
     }
 }

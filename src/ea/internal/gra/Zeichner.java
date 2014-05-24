@@ -22,17 +22,24 @@ package ea.internal.gra;
 import ea.*;
 import ea.internal.phy.Physik;
 
-import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.view.View;
 
 /**
  * Dies ist das Panel, in dem die einzelnen Dinge gezeichnet werden
  * 
  * @author Michael Andonie, Niklas Keller <me@kelunik.com>
  */
-public class Zeichner extends Canvas implements Runnable {
-	private static final long serialVersionUID = 188647530006553893L;
+public class Zeichner extends View {
+
+
+	public Zeichner(Context context) {
+		super(context);
+	}
 
 	/**
 	 * Das Intervall, in dem das Fenster upgedated wird.
@@ -69,7 +76,7 @@ public class Zeichner extends Canvas implements Runnable {
 	/**
 	 * Gibt an, ob der Thread noch arbeiten soll.
 	 */
-	private boolean work = true;
+	//private boolean work = true;
 	
 	/**
 	 * Die Liste der einfachen Geometrischen Koerper, die gezeichnet werden
@@ -79,7 +86,7 @@ public class Zeichner extends Canvas implements Runnable {
 	 */
 	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
-	private Thread thread;
+	//private Thread thread;
 
 	/**
 	 * Konstruktor fuer Objekte der Klasse Zeichner
@@ -91,61 +98,12 @@ public class Zeichner extends Canvas implements Runnable {
 	 * @param c
 	 *            Die Kamera, deren Sicht grafisch dargestellt werden soll.
 	 */
-	public Zeichner(int x, int y, Kamera c) {
-		this.setSize(x, y);
-		this.setPreferredSize(getSize());
-		this.setFocusable(true);
+	public void init(int x, int y, Kamera c) {
 		
 		this.groesse = new BoundingRechteck(0, 0, x, y);
 		this.cam = c;
 	}
 	
-	public void init() {
-		if(thread == null) {
-			thread = new Thread(this, "Zeichenthread") {{ setDaemon(true); }};
-			thread.start();
-		}
-	}
-	
-	/**
-	 * run-Methode. Implementiert aus <code>Runnable</code>.<br />
-	 * Hierin findet in einer Dauerschleife die Zeichenroutine statt.
-	 */
-	public void run() {
-		createBufferStrategy(2);
-		BufferStrategy bs = getBufferStrategy();
-		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-		
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		while (work) {
-			render(g);
-			bs.show();
-			
-			try {
-				Thread.sleep(UPDATE_INTERVALL);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	/**
-	 * Tötet den Zeichenprozess und entfernt alle Elemente von der Wurzel und
-	 * neutralisiert die Phyisk.
-	 */
-	public void kill() {
-		work = false;
-
-		try {
-			thread.join();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Physik.neutralize();
-		AnimationsManager.neutralize();
-	}
 	
 	/**
 	 * @return Die Kamera, die dieser Zeichner aufruft
@@ -195,34 +153,33 @@ public class Zeichner extends Canvas implements Runnable {
 		return groesse;
 	}
 	
-	public void addSimple(SimpleGraphic g) {
-		simples.add(g);
-	}
-	
-	public void removeSimple(SimpleGraphic g) {
-		simples.remove(g);
-	}
-	
 	/**
-	 * Die render()-Methode, sie fuehrt die gesamte Zeichenroutine aus.
-	 * 
-	 * @param g
-	 *            Das zum Zeichnen uebergebene Graphics-Objekt
+	 * Android Methode zum Zeichnen
 	 */
-	public void render(Graphics2D g) {
+	@Override
+	public void onDraw(Canvas g)
+	{
+		super.onDraw(g);
+		
+		g.drawColor(Color.BLUE);
+		
+		if(cam != null)
+			cam.zeichne(g);
+		/*
 		// Absoluter Hintergrund
-		g.setColor(Color.black);
-		g.fillRect(0, 0, (int)groesse.breite, (int)groesse.hoehe);
+		//g.setColor(Color.black);
+		//g.fillRect(0, 0, (int)groesse.breite, (int)groesse.hoehe);
 		
 		// Relativer Hintergrund
 		if (hintergrund != null) {
 			hintergrund.zeichnenBasic(g, groesse.verschobeneInstanz(new Vektor(
 					cam.getX() / 5, cam.getY() / 10)));
 		}
-		
+		*/
 		// Die Objekte
-		cam.zeichne(g);
+		//cam.zeichne(g);
 		
+		/*
 		// Die simplen Grafikobjekte (nicht in Raum)
 		BoundingRechteck camBounds = cam.position();
 		for (SimpleGraphic gr : simples) {
@@ -236,5 +193,8 @@ public class Zeichner extends Canvas implements Runnable {
 		if (vordergrund != null) {
 			vordergrund.zeichnen(g, groesse);
 		}
+		
+*/
 	}
+	
 }

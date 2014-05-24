@@ -49,9 +49,9 @@ implements Ticker {
 	public static void setzeMeterProPixel(float meterpropixel) {
 		if (meterpropixel <= 0.0f) {
 			throw new IllegalArgumentException("Die Anzahl an Metern pro Pixel muss positiv sein!");
-		} else if(MECH_TIMER.hatAktiveTicker()) {
-			throw new RuntimeException("Die Anzahl von Metern pro Pixel kann nach der Nutzung der "
-					+ "Physik nicht mehr geändert werden!");
+		//} else if(MECH_TIMER.hatAktiveTicker()) {
+		//	throw new RuntimeException("Die Anzahl von Metern pro Pixel kann nach der Nutzung der "
+			//		+ "Physik nicht mehr geändert werden!");
 		}
 		METER_PRO_PIXEL = meterpropixel;
 	}
@@ -59,7 +59,7 @@ implements Ticker {
 	/**
 	 * Der Timer, der sich aller Mechanik-Clients annimmt.
 	 */
-	public static Manager MECH_TIMER = new Manager();
+	//public static Manager MECH_TIMER = new Manager();
 	
 	/**
 	 * Das Intervall, in dem die Spielmechanik upgedated wird <b>in Sekunden</b>. Wird benutzt 
@@ -146,7 +146,7 @@ implements Ticker {
 		super(ziel);
 		collider = ziel.dimension().umschliessenderKreis();
 		einfluesseZuruecksetzen();
-		MECH_TIMER.anmelden(this, ea.internal.gra.Zeichner.UPDATE_INTERVALL);
+		//MECH_TIMER.anmelden(this, ea.internal.gra.Zeichner.UPDATE_INTERVALL);
 		CollisionHandling.anmelden(this);
 	}
 	

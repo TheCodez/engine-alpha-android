@@ -19,8 +19,9 @@
 
 package ea;
 
-import java.awt.Graphics2D;
-
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import ea.internal.collision.Collider;
 import ea.internal.collision.SphereCollider;
 
@@ -76,19 +77,20 @@ public class Kreis extends RegEck {
 	}
 	
 	@Override
-	public void zeichnen(Graphics2D g, BoundingRechteck r) {
+	public void zeichnen(Canvas g, BoundingRechteck r) {
 		// Kreis muss nicht gedreht werden,
 		// aber es könnten hier in Zukunft noch andere wichtige Funktionen aufgerunfen werden
-		super.beforeRender(g);
-		
+	
 		if (!r.schneidetBasic(this.dimension())) {
 			return;
 		}
 		
-		g.setColor(this.formen()[0].getColor());
-		g.fillOval((int) (position.x - r.x), (int) (position.y - r.y), (int) (2 * radius), (int) (2 * radius));
-		
-		super.afterRender(g);
+		Paint p = new Paint();
+		p.setColor(Color.RED);
+		g.drawCircle((position.x - r.x),(position.y - r.y), (radius), p);
+		//g.setColor(this.formen()[0].getColor());
+		//g.fillOval((int) (position.x - r.x), (int) (position.y - r.y), (int) (2 * radius), (int) (2 * radius));
+
 	}
 	
 	/**

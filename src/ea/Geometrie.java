@@ -19,9 +19,8 @@
 
 package ea;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 
+import android.graphics.Canvas;
 import ea.internal.collision.Collider;
 import ea.internal.collision.ColliderGroup;
 import ea.internal.gra.Listung;
@@ -32,11 +31,7 @@ import ea.internal.gra.Listung;
  * @author Michael Andonie
  */
 @SuppressWarnings("serial")
-public abstract class Geometrie extends Raum implements Leuchtend, Listung {
-	/**
-	 * Die einzelnen, grafisch darstellbaren Formen, aus denen dieses Geometrie-Objekt besteht.
-	 */
-	private Dreieck[] formen;
+public abstract class Geometrie extends Raum implements Listung {
 	
 	/**
 	 * Die Dimension des Objektes; zur schnellen Ausgabe
@@ -56,7 +51,7 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	/**
 	 * Die Farbe, die sich das Objekt merkt, wenn es zu leuchten anfaengt, um wieder die alte herstellen zu koennen.
 	 */
-	private Color alte = Color.white;
+	private int alte;// = Color.white;
 	
 	/**
 	 * Konstruktor fuer Objekte der Klasse Geometrie
@@ -71,7 +66,6 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	public Geometrie(float x, float y) {
 		position = new Punkt(x, y);
 		dimension = new BoundingRechteck(x, y, 0, 0);
-		super.leuchterAnmelden(this);
 	}
 	
 	/**
@@ -83,10 +77,6 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 */
 	@Override
 	public void verschieben(Vektor v) {
-		super.verschieben(v);
-		for (int i = 0; i < formen.length; i++) {
-			formen[i].verschieben(v);
-		}
 		dimension = dimension.verschobeneInstanz(v);
 	}
 	
@@ -97,26 +87,10 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 * @param c
 	 *            Die neue Farbe
 	 */
-	public void farbeSetzen(Color c) {
-		alte = c;
-		if (formen == null) {
-			formen = neuBerechnen();
-		}
-		for (int i = 0; i < formen.length; i++) {
-			formen[i].setColor(c);
-		}
+	public void farbeSetzen(int c) {
+		
 	}
 	
-	/**
-	 * Setzt ganzheitlich die Farbe der gesamten geometrischen Figur auf eine Farbe.
-	 * 
-	 * @param f
-	 *            Die Farbe, die das Objekt haben soll.
-	 * @see Farbe
-	 */
-	public void farbeSetzen(Farbe f) {
-		farbeSetzen(f.wert());
-	}
 	
 	/**
 	 * Setzt ganzheitlich die Farbe aller Formen auf eine bestimmte Farbe.<br />
@@ -126,64 +100,20 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 *            Der String-Wert der Farbe. Zu der Zuordnung siehe <b>Handbuch</b>
 	 */
 	public void farbeSetzen(String farbe) {
-		farbeSetzen(zuFarbeKonvertieren(farbe));
+		//farbeSetzen(zuFarbeKonvertieren(farbe));
 	}
 	
-	/**
-	 * Setzt, ob dieses Geometrie-Objekt leuchten soll.<br />
-	 * Ist dies der Fall, so werden immer wieder schnell dessen Farben geaendert; so entsteht ein Leuchteffekt.
-	 * 
-	 * @param leuchtet
-	 *            Ob dieses Objekt nun leuchten soll oder nicht (mehr).
-	 */
-	@Override
-	public void leuchtetSetzen(boolean leuchtet) {
-		if (this.leuchtet == leuchtet) {
-			return;
-		}
-		this.leuchtet = leuchtet;
-		if (leuchtet) {
-			alte = formen[0].getColor();
-		} else {
-			this.farbeSetzen(alte);
-		}
-	}
-	
-	/**
-	 * Fuehrt einen Leuchtschritt aus.<br />
-	 * Dies heisst, dass in dieser Methode die Farbe einfach gewechselt wird. Da diese Methode schnell und oft hintereinander
-	 * ausgefuehrt wird, soll so der Leuchteffekt entstehen.<br />
-	 * <b>Diese Methode sollte nur innerhalb der Engine ausgefuehrt werden! Also nicht fuer den Entwickler gedacht.</b>
-	 */
-	@Override
-	public void leuchtSchritt() {
-		for (int i = 0; i < formen.length; i++) {
-			formen[i].setColor(farbzyklus[leuchtzaehler = ((++leuchtzaehler) % farbzyklus.length)]);
-		}
-	}
-	
-	/**
-	 * Gibt wieder, ob das Leuchtet-Objekt gerade leuchtet oder nicht.
-	 * 
-	 * @return <code>true</code>, wenn das Objekt gerade leuchtet, wenn nicht, dann ist die Rueckgabe <code>false</code>
-	 */
-	@Override
-	public boolean leuchtet() {
-		return this.leuchtet;
-	}
 	
 	/**
 	 * Zeichnet das Objekt.<br />
 	 * heisst in diesem Fall das saemtliche Unterdreiecke gezeichnet werden.
 	 */
-	public void zeichnen(Graphics2D g, BoundingRechteck r) {
-		super.beforeRender(g);
+	public void zeichnen(Canvas g, BoundingRechteck r) {
+	
+		//for (int i = 0; i < formen.length; i++) {
+			//formen[i].zeichnen(g, r);
+		//}
 		
-		for (int i = 0; i < formen.length; i++) {
-			formen[i].zeichnen(g, r);
-		}
-		
-		super.afterRender(g);
 	}
 	
 	public BoundingRechteck dimension() {
@@ -199,11 +129,14 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 */
 	@Override
 	public BoundingRechteck[] flaechen() {
-		BoundingRechteck[] ret = new BoundingRechteck[formen.length];
+		
+		return new BoundingRechteck[] { new BoundingRechteck(0,0,0,0)};
+		/*BoundingRechteck[] ret = new BoundingRechteck[formen.length];
 		for (int i = 0; i < formen.length; i++) {
 			ret[i] = formen[i].dimension();
 		}
 		return ret;
+		*/
 	}
 	
 	/**
@@ -211,13 +144,7 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 * Zugrunde liegt eine neue Wertzuweisung des Arrays, es wird <code>neuBerechnen()</code> aufgerufen.
 	 */
 	protected void aktualisieren() {
-		formen = neuBerechnen();
 
-		for (int i = 0; i < formen.length; i++) {
-			formen[i].setColor(alte);
-		}
-
-		dimension = ausDreiecken(formen);
 	}
 	
 	/**
@@ -230,16 +157,6 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 		farbeSetzen("Weiss");
 	}
 	
-	/**
-	 * Berechnet ein neues BoundingRechteck fuer ein Array aus Dreiecken
-	 */
-	public static BoundingRechteck ausDreiecken(Dreieck[] ecke) {
-		BoundingRechteck r = ecke[0].dimension();
-		for (int i = 1; i < ecke.length; i++) {
-			r = r.summe(ecke[i].dimension());
-		}
-		return r;
-	}
 	
 	/**
 	 * Diese Methode loescht alle eventuell vorhandenen Referenzen innerhalb der Engine auf dieses Objekt, damit es problemlos geloescht werden kann.<br />
@@ -251,25 +168,9 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 */
 	@Override
 	public void loeschen() {
-		super.leuchterAbmelden(this);
+//		super.leuchterAbmelden(this);
 		super.loeschen();
 	}
-	
-	/**
-	 * Gibt alle Unterdreiecke dieser Geometrie-Figur wieder.<br />
-	 * 
-	 * @return Ein Array mit allen Dreiecken dieser Figur.
-	 */
-	public Dreieck[] formen() {
-		return this.formen;
-	}
-	
-	/**
-	 * In dieser Methode werden saemtliche Dreiecke neu berechnet und die Referenz bei Aufruf in der Superklasse hierauf gesetzt
-	 * 
-	 * @return Ein Dreieck-Array mit allen, die Figur beschreibenden Dreiecken als Inhalt.
-	 */
-	public abstract Dreieck[] neuBerechnen();
 	
 	/**
 	 * {@inheritDoc}
@@ -277,10 +178,7 @@ public abstract class Geometrie extends Raum implements Leuchtend, Listung {
 	 */
 	@Override
 	public Collider erzeugeCollider() {
-		ColliderGroup group = new ColliderGroup();
-		for(Dreieck d : formen) {
-			group.addCollider(d.erzeugeCollider());
-		}
-		return group;
+	
+		return erzeugeLazyCollider();
 	}
 }

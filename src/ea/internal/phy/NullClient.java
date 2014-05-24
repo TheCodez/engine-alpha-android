@@ -23,7 +23,7 @@ import ea.FallReagierbar;
 import ea.Raum;
 import ea.StehReagierbar;
 import ea.Vektor;
-import ea.internal.util.Logger;
+//import ea.internal.util.Logger;
 
 /**
  * Der Client fuer nicht vorhandene Teilnahme an der Physik.<br />
@@ -175,7 +175,7 @@ public class NullClient
      */
 	@Override
 	public void impulsHinzunehmen(Vektor impuls) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Impulsrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keine Impulsrechnung. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class NullClient
      */
 	@Override
 	public void geschwindigkeitHinzunehmen(Vektor geschwindigkeit) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class NullClient
      */
 	@Override
 	public float getLuftwiderstandskoeffizient() {
-		Logger.error("Neutrale Objekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
 		return 0;
 	}
 
@@ -200,7 +200,7 @@ public class NullClient
      */
 	@Override
 	public boolean istBeeinflussbar() {
-		Logger.error("Neutrale Objekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
 		return false;
 	}
 
@@ -209,7 +209,7 @@ public class NullClient
      */
 	@Override
 	public float getMasse() {
-		Logger.error("Neutrale Objekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
 		return 0;
 	}
 
@@ -218,7 +218,7 @@ public class NullClient
      */
 	@Override
 	public Vektor getForce() {
-		Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 		return null;
 	}
 
@@ -227,7 +227,7 @@ public class NullClient
      */
 	@Override
 	public void luftwiderstandskoeffizientSetzen(float luftwiderstandskoeffizient) {
-		Logger.error("Neutrale Objekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class NullClient
      */
 	@Override
 	public void beeinflussbarSetzen(boolean beeinflussbar) {
-		Logger.error("Neutrale Objekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -243,7 +243,7 @@ public class NullClient
      */
 	@Override
 	public void masseSetzen(float masse) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class NullClient
      */
 	@Override
 	public void kraftSetzen(Vektor kraft) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class NullClient
      */
 	@Override
 	public void geschwindigkeitSetzen(Vektor geschwindigkeit) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Neutrale Objekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class NullClient
      */
 	@Override
 	public void einfluesseZuruecksetzen() {
-		Logger.error("Neutrale Objekte unterstützen leider keine Einflüsse. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keine Einflüsse. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -275,6 +275,6 @@ public class NullClient
      */
 	@Override
 	public void kraftAnwenden(Vektor kraft, float t_kraftuebertrag) {
-		Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Neutrale Objekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 	}
 }

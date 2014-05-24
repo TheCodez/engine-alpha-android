@@ -23,10 +23,11 @@ import ea.internal.collision.Collider;
 import ea.internal.collision.ColliderGroup;
 import ea.internal.gra.Listung;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
+
+import android.graphics.Canvas;
 
 /**
  * Ein Knoten ist eine Sammlung vielen Raum-Objekten, die hierdurch einheitlich bewegt, und einheitlich behandelt werden koennen.
@@ -43,7 +44,7 @@ public class Knoten extends Raum implements Listung {
 	 * Konstruktor für Objekte der Klasse Knoten
 	 */
 	public Knoten() {
-		list = new Vector<>();
+		list = new Vector<Raum>();
 	}
 	
 	/**
@@ -229,14 +230,11 @@ public class Knoten extends Raum implements Listung {
 	 *            Das Rechteck, dass die Kameraposition definiert
 	 */
 	@Override
-	public void zeichnen(Graphics2D g, BoundingRechteck r) {
-		super.beforeRender(g);
+	public void zeichnen(Canvas g, BoundingRechteck r) {
 
 		for (int i = list.size() - 1; i >= 0; i--) {
 			list.get(i).zeichnenBasic(g, r);
 		}
-
-		super.afterRender(g);
 	}
 	
 	/**

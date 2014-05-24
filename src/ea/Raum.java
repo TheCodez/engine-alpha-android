@@ -22,11 +22,10 @@ package ea;
 import ea.internal.collision.BoxCollider;
 import ea.internal.collision.Collider;
 import ea.internal.collision.NullCollider;
-import ea.internal.gui.Fenster;
 import ea.internal.phy.*;
 
-import java.awt.*;
-import java.util.Locale;
+import android.graphics.Canvas;
+import android.graphics.Color;
 
 /**
  * Raum bezeichnet alles, was sich auf der Zeichenebene befindet.<br />
@@ -36,22 +35,7 @@ import java.util.Locale;
  * @author Michael Andonie, Niklas Keller
  */
 public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
-	/**
-	 * Die Serialisierungs-Konstante dieser Klasse. <b>In keiner Weise fuer die Programmierung mit der Engine bedeutsam!</b>
-	 */
-	private static final long serialVersionUID = 98L;
-	
-	/**
-	 * Der Leuchtmacher fuer alle Raum-Objekte
-	 */
-	private static final LeuchtMacher macher = new LeuchtMacher();
-	
-	/**
-	 * Der Animations-Manager, über den alle Animationen laufen.<br />
-	 * Wird zum Löschen aller Referenzen auf dieses Objekt verwendet.
-	 */
-	private static final AnimationsManager animationsManager = AnimationsManager.getAnimationsManager();
-	
+
 	/**
 	 * Ob die Kollisionstests Roh oder fein ablaufen sollen.
 	 */
@@ -71,15 +55,15 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	/**
 	 * Ein einfacher Farbzyklus, der fuer die Leucht-Animationen genommen wird
 	 */
-	public static final Color[] farbzyklus = {
-		Color.white,
-		Color.blue,
-		Color.red,
-		Color.yellow,
-		Color.magenta,
-		Color.cyan,
-		Color.green,
-		Color.orange,
+	public static final int[] farbzyklus = {
+		Color.WHITE,
+		Color.BLUE,
+		Color.RED,
+		Color.YELLOW,
+		Color.MAGENTA,
+		Color.CYAN,
+		Color.GREEN,
+		Color.YELLOW,
 	};
 	
 	/**
@@ -611,101 +595,6 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	}
 	
 	/**
-	 * Diese Methode ordnet einem String ein Color-Objekt zu.<br />
-	 * Hierdurch ist in den Klassen außerhalb der Engine keine awt-Klasse nötig.
-	 * 
-	 * @param t
-	 *            Der Name der Farbe.<br />
-	 *            Ein Katalog mit allen moeglichen Namen findet sich im <b>Handbuch</b>
-	 * @return Das Farbobjekt zum String; ist Color.black bei unzuordnembaren String
-	 */
-	public static Color zuFarbeKonvertieren(String t) {
-		Color c;
-		
-		switch (t.toLowerCase(Locale.GERMAN)) {
-			case "gelb":
-				c = Color.yellow;
-				break;
-			case "weiss":
-				c = Color.white;
-				break;
-			case "orange":
-				c = Color.orange;
-				break;
-			case "grau":
-				c = Color.gray;
-				break;
-			case "gruen":
-				c = Color.green;
-				break;
-			case "blau":
-				c = Color.blue;
-				break;
-			case "rot":
-				c = Color.red;
-				break;
-			case "pink":
-				c = Color.pink;
-				break;
-			case "magenta":
-			case "lila":
-				c = Color.magenta;
-				break;
-			case "cyan":
-			case "tuerkis":
-				c = Color.cyan;
-				break;
-			case "dunkelgrau":
-				c = Color.darkGray;
-				break;
-			case "hellgrau":
-				c = Color.lightGray;
-				break;
-			default:
-				c = Color.black;
-				break;
-		}
-		
-		return DateiManager.ausListe(c);
-	}
-	
-	/**
-	 * Erstellt eine Halbdurchsichtige Farbe mit den selben RGB-Werten, wie die eingegebene.<br />
-	 * Diese Methode wird intern verwendet.
-	 * 
-	 * @param c
-	 *            Die Farbe, deren im Alphawert gesenkte Instanz erstellt werden soll.
-	 */
-	public static final Color halbesAlpha(Color c) {
-		return DateiManager.ausListe(new Color(c.getRed(), c.getGreen(), c.getBlue(), 178));
-	}
-	
-	/**
-	 * Meldet ein Leuchtend-Objekt an dem vorgesehenen LeuchtErsteller Objekt an.<br />
-	 * Diese Methode ist dafür vorgesehen, dass sie <b>nur im Konstruktor der dieses Interface implementierenden Instanz aufgerufen wird</b>, und zwar mit dem <code>this</code>-Pointer, sprich:<br />
-	 * :<code>super.leuchterAnmelden(this);</code>
-	 *
-	 * Prinzipiell sollte diese Methode nur innerhalb der Engine aufgerufen werden
-	 * 
-	 * @param l
-	 *            Der anzumeldende Leuchter
-	 */
-	protected final void leuchterAnmelden(Leuchtend l) {
-		macher.add(l);
-	}
-	
-	/**
-	 * Meldet ein Leuchtend-Objekt am vorgesehenen LeuchtMacher-Objekt ab.<br />
-	 * Prinzipiell sollte diese Methode nur innerhalb der Engine aufgerufen werden
-	 * 
-	 * @param l
-	 *            Der abzumeldende Leuchter
-	 */
-	protected final void leuchterAbmelden(Leuchtend l) {
-		macher.entfernen(l);
-	}
-	
-	/**
 	 * Interne Testmethode, die ein mathematisch simples Konzept hat.<br />
 	 * Es gibt kein Problem, wenn die Zahlen das selbe Vorzeichen haben
 	 * oder wenn eine der beiden Zahlen gleich 0 ist.
@@ -732,7 +621,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 *            Hierbei soll zunaechst getestet werden, ob das Objekt innerhalb der Kamera liegt, und erst dann gezeichnet werden.
 	 * @see #zeichnen(Graphics2D, BoundingRechteck)
 	 */
-	public final void zeichnenBasic(Graphics2D g, BoundingRechteck r) {
+	public final void zeichnenBasic(Canvas g, BoundingRechteck r) {
 		statisch = (r.x == 0) && (r.y == 0);
 		
 		if (sichtbar) {
@@ -917,36 +806,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 *            Das BoundingRechteck, dass die Kameraperspektive Repraesentiert.<br />
 	 *            Hierbei soll zunaechst getestet werden, ob das Objekt innerhalb der Kamera liegt, und erst dann gezeichnet werden.
 	 */
-	public abstract void zeichnen(Graphics2D g, BoundingRechteck r);
-	
-	/**
-	 * Dreht die Zeichenfläche um den Mittelpunkt des Raumes um die gegebenen Grad, bevor mit dem Zeichenn begonnen wird.<br />
-	 * <b><i>Diese Methode sollte nicht außerhalb der Engine verwendet werden.</i></b>
-	 * 
-	 * @see #drehung
-	 * @see #gibDrehung()
-	 * @see #zeichnen(Graphics2D, BoundingRechteck)
-	 * @see #afterRender(Graphics2D)
-	 */
-	public final void beforeRender(Graphics2D g) {
-		lastMiddle = mittelPunkt();
-		lastDrehung = Math.toRadians(drehung);
-
-		g.rotate(lastDrehung, lastMiddle.x, lastMiddle.y);
-	}
-	
-	/**
-	 * Dreht die Zeichenfläche wieder zurück in den Ausgangszustand.
-	 * <b><i>Diese Methode sollte nicht außerhalb der Engine verwendet werden.</i></b>
-	 * 
-	 * @see #drehung
-	 * @see #gibDrehung()
-	 * @see #zeichnen(Graphics2D, BoundingRechteck)
-	 * @see #beforeRender(Graphics2D)
-	 */
-	public final void afterRender(Graphics2D g) {
-		g.rotate(-lastDrehung, lastMiddle.x, lastMiddle.y);
-	}
+	public abstract void zeichnen(Canvas g, BoundingRechteck r);
 	
 	/**
 	 * Prueft, ob ein bestimmter Punkt innerhalb des Raum-Objekts liegt.
@@ -956,10 +816,10 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * @return TRUE, wenn der Punkt innerhalb des Objekts liegt.
 	 */
 	public final boolean beinhaltet(Punkt p) {
-		if (statisch) {
-			BoundingRechteck b = Fenster.instanz().getCam().position();
-			p = p.verschobeneInstanz(new Vektor(-b.x, -b.y));
-		}
+	//	if (statisch) {
+	//		BoundingRechteck b = Fenster.instanz().getCam().position();
+	//		p = p.verschobeneInstanz(new Vektor(-b.x, -b.y));
+	//	}
 
 		BoundingRechteck[] dim = flaechen();
 
@@ -1095,7 +955,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * selbst geloescht werden, <b>dies erledigt diese Methode nicht!!</b>.
 	 */
 	public void loeschen() {
-		animationsManager.animationBeendenVon(this);
+		//animationsManager.animationBeendenVon(this);
 	}
 	
 	/**

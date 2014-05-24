@@ -1,7 +1,5 @@
 package ea.internal.collision;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import ea.BoundingRechteck;
 import ea.Punkt;
 import ea.Vektor;

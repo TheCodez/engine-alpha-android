@@ -1,6 +1,5 @@
 package ea.internal.collision;
 
-import ea.Dreieck;
 import ea.Punkt;
 import ea.Vektor;
 
@@ -56,6 +55,7 @@ implements Cloneable {
 	 */
 	public static boolean sphereboxCollision(SphereCollider sphere, BoxCollider box, Punkt ps, Punkt pb) {
 		sphere.modelsphere.positionSetzen(ps.verschobenerPunkt(sphere.offset));
+		/*
 		for(Dreieck d : sphere.modelsphere.formen()) {
 			Punkt[] punkte = d.punkte();
 			for (int i = 0; i < punkte.length; i++) {
@@ -67,6 +67,7 @@ implements Cloneable {
 				}
 			}
 		}
+		*/
 		return false;
 	}
 	

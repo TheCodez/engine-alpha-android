@@ -19,8 +19,7 @@
 
 package ea;
 
-import java.awt.Graphics2D;
-
+import android.graphics.Canvas;
 import ea.internal.gra.Zeichenebene;
 
 /**
@@ -302,15 +301,15 @@ public class Kamera {
 	/**
 	 * Zeichnet alle Objekte neu, die sich auf der Zeichenebene und im Blickfeld der Kamera befinden.
 	 */
-	public void zeichne(Graphics2D g) {
+	public void zeichne(Canvas c) {
 		if (hatFokus()) {
 			// Nachjustieren
-			bild = bild.mittenAngleichInstanz(fokus.dimension());
-			bild = bild.verschobeneInstanz(verzug);
+			//bild = bild.mittenAngleichInstanz(fokus.dimension());
+			//bild = bild.verschobeneInstanz(verzug);
 		}
 		if (hatBounds) {
 			bild = bild.in(bounds);
 		}
-		ebene.basis().zeichnen(g, bild);
+		ebene.basis().zeichnen(c, bild);
 	}
 }

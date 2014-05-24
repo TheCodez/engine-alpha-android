@@ -25,7 +25,7 @@ import ea.Knoten;
 import ea.Raum;
 import ea.StehReagierbar;
 import ea.Vektor;
-import ea.internal.util.Logger;
+//import ea.internal.util.Logger;
 
 /**
  * Ein Passivator ueberwacht und steuert ein passives Objekt in der Physik.
@@ -158,7 +158,7 @@ public class Passivator
 	 */
 	@Override
 	public boolean sprung(int kraft) {
-		Logger.error("Achtung! Ein fuer die Physik passives Objekt wurde zum Sprung gezwungen. Es passiert nichts.");
+		//Logger.error("Achtung! Ein fuer die Physik passives Objekt wurde zum Sprung gezwungen. Es passiert nichts.");
 		
 		return false;
 	}
@@ -172,8 +172,8 @@ public class Passivator
 	 */
 	@Override
 	public void schwerkraftAktivSetzen(boolean aktiv) {
-		Logger.error("Achtung! Das Objekt, bei dem der Einfluss der Schwerkraft gesetzt werden sollte, ist ein passives " +
-				"Objekt. Folglich macht der Aufruf dieser Methode keinen Sinn. Dafuer muesste das entsprechende Objekt ein Aktiv-Objekt sein!");
+		//Logger.error("Achtung! Das Objekt, bei dem der Einfluss der Schwerkraft gesetzt werden sollte, ist ein passives " +
+		//		"Objekt. Folglich macht der Aufruf dieser Methode keinen Sinn. Dafuer muesste das entsprechende Objekt ein Aktiv-Objekt sein!");
 	}
 	
 	/**
@@ -186,8 +186,8 @@ public class Passivator
 	 */
 	@Override
 	public void kritischeTiefeSetzen(int tiefe) {
-		Logger.error("Achtung! Das Raum-Objekt, dem eine kritische Tiefe gegeben werden sollte, ist kein Aktiv-Objekt, sondern passiv! " +
-				"Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
+		//Logger.error("Achtung! Das Raum-Objekt, dem eine kritische Tiefe gegeben werden sollte, ist kein Aktiv-Objekt, sondern passiv! " +
+		//		"Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
 	}
 	
 	/**
@@ -203,8 +203,8 @@ public class Passivator
 	 */
 	@Override
 	public void fallReagierbarAnmelden(FallReagierbar f, int tiefe) {
-		Logger.error("Achtung! Das Raum-Objekt, dem ein FallReagierbar-Listener zugewiesen werden sollte, ist kein Aktiv-Objekt, sondern passiv! " +
-				"Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
+		//Logger.error("Achtung! Das Raum-Objekt, dem ein FallReagierbar-Listener zugewiesen werden sollte, ist kein Aktiv-Objekt, sondern passiv! " +
+		//		"Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
 	}
 	
 	/**
@@ -216,8 +216,8 @@ public class Passivator
 	 */
 	@Override
 	public void stehReagierbarAnmelden(StehReagierbar s) {
-		Logger.error("Achtung! Das Raum-Objekt, dem ein StehReagierbar-Listener zugewiesen werden sollte, ist kein Aktiv-Objekt, sonder ein " +
-				"passives Objekt! Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
+		//Logger.error("Achtung! Das Raum-Objekt, dem ein StehReagierbar-Listener zugewiesen werden sollte, ist kein Aktiv-Objekt, sonder ein " +
+		//		"passives Objekt! Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen!");
 	}
 	
 	/**
@@ -228,8 +228,8 @@ public class Passivator
 	 */
 	@Override
 	public boolean steht() {
-		Logger.error("Achtung! Das Raum-Objekt, an dem das Stehen erfragt werden sollte, ist kein Aktiv-Objekt, sonder ein " +
-				"passives Objekt! Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen! Solange ist die Rueckgabe immer false.");
+		//Logger.error("Achtung! Das Raum-Objekt, an dem das Stehen erfragt werden sollte, ist kein Aktiv-Objekt, sonder ein " +
+		//		"passives Objekt! Bitte erst dieses Objekt aktiv machen, dann diese Methode aufrufen! Solange ist die Rueckgabe immer false.");
 		return false;
 	}
 	
@@ -247,8 +247,8 @@ public class Passivator
 	 */
 	@Override
 	public void schwerkraftSetzen(int schwerkraft) {
-		Logger.error("Achtung! Ein passives Raum-Objekt sollte eine neue Schwerkraft verpasst bekommen. Das ist nicht moeglich. "
-				+ "Nur Aktiv-Objekte koennen eine Schwerkraft gesetzt bekommen.");
+		//Logger.error("Achtung! Ein passives Raum-Objekt sollte eine neue Schwerkraft verpasst bekommen. Das ist nicht moeglich. "
+		//		+ "Nur Aktiv-Objekte koennen eine Schwerkraft gesetzt bekommen.");
 	}
 
     /**
@@ -256,7 +256,7 @@ public class Passivator
      */
 	@Override
 	public void impulsHinzunehmen(Vektor impuls) {
-		Logger.error("Passivobjekte unterstützen leider keine Impulsrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Impulsrechnung. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -264,7 +264,7 @@ public class Passivator
      */
 	@Override
 	public void geschwindigkeitHinzunehmen(Vektor geschwindigkeit) {
-		Logger.error("Passivobjekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class Passivator
      */
 	@Override
 	public float getLuftwiderstandskoeffizient() {
-		Logger.error("Passivobjekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
 		return 0;
 	}
 
@@ -281,7 +281,7 @@ public class Passivator
      */
 	@Override
 	public boolean istBeeinflussbar() {
-		Logger.error("Passivobjekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
 		return false;
 	}
 
@@ -290,7 +290,7 @@ public class Passivator
      */
 	@Override
 	public float getMasse() {
-		Logger.error("Passivobjekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
 		return 0;
 	}
 
@@ -299,7 +299,7 @@ public class Passivator
      */
 	@Override
 	public Vektor getForce() {
-		Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 		return null;
 	}
 
@@ -308,7 +308,7 @@ public class Passivator
      */
 	@Override
 	public void luftwiderstandskoeffizientSetzen(float luftwiderstandskoeffizient) {
-		Logger.error("Passivobjekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keinen Luftwiderstand. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class Passivator
      */
 	@Override
 	public void beeinflussbarSetzen(boolean beeinflussbar) {
-		Logger.error("Passivobjekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keinen Beeinflussbarkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class Passivator
      */
 	@Override
 	public void masseSetzen(float masse) {
-		Logger.error("Passivobjekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
+	//	Logger.error("Passivobjekte unterstützen leider keine Masse. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class Passivator
      */
 	@Override
 	public void kraftSetzen(Vektor kraft) {
-		Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class Passivator
      */
 	@Override
 	public void geschwindigkeitSetzen(Vektor geschwindigkeit) {
-		Logger.error("Passivobjekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Geschwindigkeit. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -348,7 +348,7 @@ public class Passivator
      */
 	@Override
 	public void einfluesseZuruecksetzen() {
-		Logger.error("Passivobjekte unterstützen leider keine Einflüsse. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Einflüsse. Dafür gibt es die Newton-Körper!");
 	}
 
 	/**
@@ -356,6 +356,6 @@ public class Passivator
      */
 	@Override
 	public void kraftAnwenden(Vektor kraft, float t_kraftuebertrag) {
-		Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
+		//Logger.error("Passivobjekte unterstützen leider keine Kraftrechnung. Dafür gibt es die Newton-Körper!");
 	}
 }

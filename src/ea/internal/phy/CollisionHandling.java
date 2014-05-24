@@ -1,7 +1,7 @@
 package ea.internal.phy;
 
 import ea.*;
-import ea.internal.util.Logger;
+//import ea.internal.util.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ import java.util.Queue;
 public class CollisionHandling {
 	
 	static {
-		Manager.standard.anmelden(new CollisionRoutine(), ea.internal.gra.Zeichner.UPDATE_INTERVALL);
+		//Manager.standard.anmelden(new CollisionRoutine(), ea.internal.gra.Zeichner.UPDATE_INTERVALL);
 		new CollisionConsumer().start();
 	}
 	
@@ -37,7 +37,7 @@ public class CollisionHandling {
 							colQueue.wait();
 						} catch (InterruptedException e) {
 							// Nothing to do.
-							Logger.error("Unerwarteter Fehler im Collision Handling Thread");
+							//Logger.error("Unerwarteter Fehler im Collision Handling Thread");
 						}
 					colQueue.remove().abarbeiten();
 				}

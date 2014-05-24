@@ -19,8 +19,9 @@
 
 package ea;
 
-import java.awt.Graphics2D;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import ea.internal.collision.Collider;
 
 /**
@@ -96,20 +97,7 @@ public class Rechteck extends Geometrie {
 		this.laenge = hoehe;
 		aktualisieren();
 	}
-	
-	/**
-	 * In dieser Methode werden saemtliche Dreiecke neu berechnet und die Referenz bei Aufruf in der Superklasse hierauf gesetzt
-	 * 
-	 * @return Ein Dreieck-Array mit allen, die Figur beschreibenden Dreiecken als Inhalt.
-	 */
-	@Override
-	public Dreieck[] neuBerechnen() {
-		Dreieck[] i = {
-			new Dreieck(new Punkt(position.x, position.y), new Punkt(position.x + breite, position.y), new Punkt(position.x, position.y + laenge)),
-			new Dreieck(new Punkt(position.x, position.y + laenge), new Punkt(position.x + breite, position.y + laenge), new Punkt(position.x + breite, position.y))
-		};
-		return i;
-	}
+
 	
 	/**
 	 * Zeichnet das Objekt.
@@ -121,17 +109,18 @@ public class Rechteck extends Geometrie {
 	 *            Hierbei soll zunaechst getestet werden, ob das Objekt innerhalb der Kamera liegt, und erst dann gezeichnet werden.
 	 */
 	@Override
-	public void zeichnen(Graphics2D g, BoundingRechteck r) {
-		super.beforeRender(g);
+	public void zeichnen(Canvas g, BoundingRechteck r) {
+	
+		Paint p = new Paint();
+		///p.setColor(color);
 		
 		if (!r.schneidetBasic(this.dimension())) {
 			return;
 		}
 		
-		g.setColor(super.formen()[0].getColor());
-		g.fillRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge);
-		
-		super.afterRender(g);
+		//g.setColor(super.formen()[0].getColor());
+		//g.fillRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge);
+		g.drawRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge, p);
 	}
 	
 	/**

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import ea.BoundingRechteck;
 import ea.Knoten;
 import ea.KollisionsReagierbar;
-import ea.Manager;
+//import ea.Manager;
 import ea.Raum;
 import ea.Ticker;
 import ea.Vektor;
@@ -48,7 +48,7 @@ import ea.Vektor;
  * @author Michael Andonie
  */
 @SuppressWarnings("serial")
-public class Physik extends Manager implements Ticker {
+public class Physik /*extends Manager*/ implements Ticker {
 	
 	/**
 	 * Die Liste aller Kollisionstestauftraege
@@ -82,7 +82,7 @@ public class Physik extends Manager implements Ticker {
 		if (physik == null)
 			return;
 		// Beendet Berechnungen
-		physik.kill();
+		//physik.kill();
 		for (Passivator p : physik.passive) {
 			p.ziel().neutralMachen();
 		}
@@ -99,7 +99,8 @@ public class Physik extends Manager implements Ticker {
 	 *            Gibt an, wie viele Kollisionspartner maximal merkbar sind
 	 */
 	private Physik() {
-		super("Physik-Management");
+		//super("Physik-Management");
+	/*
 		Manager.standard.anmelden(new Ticker() {
 			public void tick() {
 				for (Auftrag a : kollisionsListe) {
@@ -107,7 +108,8 @@ public class Physik extends Manager implements Ticker {
 				}
 			}
 		}, 35);
-		this.anmelden(this, 1);
+		*/
+		//this.anmelden(this, 1);
 	}
 	
 	/**
