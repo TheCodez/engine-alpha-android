@@ -9,27 +9,26 @@ import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-/* TODO!!
- * Hauptklasse fuer Android Anwendungen jede App sollte hiervon erben.
+/*
+ * TODO GameActivity soll abstract werden und als Basic Klasse für jedes Spiel gelten
  * 
 */
 public class GameActivity extends Activity
 {
 	
 	public Knoten wurzel;
-	
-	@SuppressWarnings("unused")
-	private Knoten superWurzel;
-	
+		
 	private Zeichner zeichner;
 	
 	public Kamera cam;
 	
-	//private final Random zufall = new Random();
+	@SuppressWarnings("unused")
+	private final Random zufall = new Random();
 
 	
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+	{
         super.onCreate(savedInstanceState);
         
         final int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
@@ -39,15 +38,23 @@ public class GameActivity extends Activity
 		zeichner = new Zeichner(this);
 		zeichner.init(screenWidth, screenHeight, cam);
 		
-		wurzel = new Knoten();
-		cam.wurzel().add(wurzel);
+		cam.wurzel().add(wurzel = new Knoten());
         
         setTitle("Engine Alpha Android");
         setContentView(zeichner);
         
-        wurzel.add(new Kreis(50 , 120, 40));
-        wurzel.add(new Rechteck(100, 250, 120, 120));
+        Kreis k = new Kreis(200 , 180, 80);
+        k.farbeSetzen(Farbe.Gruen);
+        
+        Rechteck r = new Rechteck(screenHeight / 2 - 240, screenHeight / 2 - 120, 120, 120);
+        r.farbeSetzen(Farbe.Weiss);
+        
+        wurzel.add(k);
+        wurzel.add(r);
         
     }
+	
+	// Diese Methode sollte in unterklassen ueberschrieben werden
+	//public abstract void spielStart();
 	
 }

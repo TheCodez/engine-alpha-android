@@ -23,7 +23,6 @@ import ea.internal.collision.BoxCollider;
 import ea.internal.collision.Collider;
 import ea.internal.collision.NullCollider;
 import ea.internal.phy.*;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 
@@ -40,6 +39,8 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * Ob die Kollisionstests Roh oder fein ablaufen sollen.
 	 */
 	protected static boolean roh = false;
+	
+	protected Farbe farbe = Farbe.Weiss;
 	
 	/**
 	 * Die absolute Position des Raum-Objekts. Die Interpretation dieses Parameters
@@ -104,6 +105,10 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 */
 	public Raum() {
 		//
+	}
+	
+	public void farbeSetzen(Farbe farbe) {
+		this.farbe = farbe;
 	}
 	
 	/**

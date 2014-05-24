@@ -35,7 +35,7 @@ public class Rechteck extends Geometrie {
 	/**
 	 * Die Laenge
 	 */
-	private float laenge;
+	private float hoehe;
 	
 	/**
 	 * Die Breite
@@ -57,7 +57,7 @@ public class Rechteck extends Geometrie {
 	public Rechteck(float x, float y, float breite, float hoehe) {
 		super(x, y);
 		this.breite = breite;
-		this.laenge = hoehe;
+		this.hoehe = hoehe;
 		aktualisierenFirst();
 	}
 	
@@ -71,7 +71,7 @@ public class Rechteck extends Geometrie {
 	 */
 	public void masseSetzen(int breite, int hoehe) {
 		this.breite = breite;
-		this.laenge = hoehe;
+		this.hoehe = hoehe;
 		aktualisieren();
 	}
 	
@@ -95,7 +95,7 @@ public class Rechteck extends Geometrie {
 	 * @see #breiteSetzen(int)
 	 */
 	public void hoeheSetzen(int hoehe) {
-		this.laenge = hoehe;
+		this.hoehe = hoehe;
 		aktualisieren();
 	}
 
@@ -113,23 +113,18 @@ public class Rechteck extends Geometrie {
 	public void zeichnen(Canvas g, BoundingRechteck r) {
 	
 		Paint p = new Paint();
-		///p.setColor(color);
+		p.setColor(farbe.farbeZuInt());//(super.formen()[0].getColor());
 		
-		if (!r.schneidetBasic(this.dimension())) {
+		if (!r.schneidetBasic(this.dimension()))
 			return;
-		}
 		
-		//g.setColor(super.formen()[0].getColor());
-		//g.fillRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge);
-		RectF rect = new RectF(position.x, position.y, position.x + breite - 1, position.y + laenge - 1);
-		g.drawRect(rect, p);
-		//g.drawRect((int) (position.x - r.x), (int) (position.y - r.y), (int) breite, (int) laenge, p);
+		g.drawRect(position.x - r.x, position.y - r.y, position.x + breite, position.y + hoehe, p);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 * Collider wird direkt aus dem das <code>Raum</code>-Objekt umfassenden <code>BoundingRechteck</code>
-	 * erzeugt, dass über die <code>dimension()</code>-Methode berechnet wird.
+	 * erzeugt, dass ueber die <code>dimension()</code>-Methode berechnet wird.
 	 */
 	@Override
 	public Collider erzeugeCollider() {

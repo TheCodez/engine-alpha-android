@@ -86,7 +86,7 @@ public class Kreis extends RegEck {
 		}
 		
 		Paint p = new Paint();
-		p.setColor(Color.RED);
+		p.setColor(farbe.farbeZuInt());
 		g.drawCircle((position.x - r.x),(position.y - r.y), (radius), p);
 		//g.setColor(this.formen()[0].getColor());
 		//g.fillOval((int) (position.x - r.x), (int) (position.y - r.y), (int) (2 * radius), (int) (2 * radius));

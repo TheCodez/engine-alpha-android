@@ -39,16 +39,6 @@ public abstract class Geometrie extends Raum implements Listung {
 	protected BoundingRechteck dimension;
 	
 	/**
-	 * Gibt an, ob dieses Geometrie-Objekt gerade leuchtet
-	 */
-	private boolean leuchtet = false;
-	
-	/**
-	 * Der Leuchtzaehler fuer die Leucht-Animationen
-	 */
-	private int leuchtzaehler = 0;
-	
-	/**
 	 * Die Farbe, die sich das Objekt merkt, wenn es zu leuchten anfaengt, um wieder die alte herstellen zu koennen.
 	 */
 	private int alte;// = Color.white;
@@ -78,17 +68,6 @@ public abstract class Geometrie extends Raum implements Listung {
 	@Override
 	public void verschieben(Vektor v) {
 		dimension = dimension.verschobeneInstanz(v);
-	}
-	
-	/**
-	 * Setzt ganzheitlich die Farbe aller Formen auf eine bestimmte Farbe.<br />
-	 * Dadurch faerbt sich im Endeffekt das ganze Objekt neu ein.
-	 * 
-	 * @param c
-	 *            Die neue Farbe
-	 */
-	public void farbeSetzen(int c) {
-		
 	}
 	
 	
