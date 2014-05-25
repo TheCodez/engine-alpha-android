@@ -5,7 +5,6 @@ import java.util.Random;
 import ea.*;
 import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
-import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -45,9 +44,7 @@ public abstract class GameActivity extends Activity
         setContentView(zeichner);   
         
         init();
-        
-        instanz = this;
-    }
+	}
 
 	public static GameActivity get()
 	{
@@ -74,6 +71,30 @@ public abstract class GameActivity extends Activity
 	protected void init()
 	{
 		instanz = this;
+	}
+	
+	
+	/**
+	 * TODO
+	 */
+	public void tick()
+	{
+		
+	}
+	
+	
+	public boolean zufallsBoolean() 
+	{
+		return zufall.nextBoolean();
+	}
+
+	
+	public int zufallsZahl(int obergrenze) 
+	{
+		if (obergrenze < 0) {
+			System.err.println("Achtung!! Fuer eine Zufallszahl muss die definierte Obergrenze (die inklusiv in der Ergebnismenge ist) eine nichtnegative Zahl sein!!");
+		}
+		return zufall.nextInt(obergrenze + 1);
 	}
 	
 }

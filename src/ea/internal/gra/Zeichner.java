@@ -20,13 +20,11 @@
 package ea.internal.gra;
 
 import ea.*;
-import ea.internal.phy.Physik;
-
 import java.util.ArrayList;
+import java.util.Timer;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.View;
 
 /**
@@ -36,6 +34,8 @@ import android.view.View;
  */
 public class Zeichner extends View {
 
+	private Timer timer;
+	
 	/**
 	 * Das Intervall, in dem das Fenster upgedated wird.
 	 */
@@ -81,8 +81,6 @@ public class Zeichner extends View {
 	 */
 	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
-	//private Thread thread;
-	
 	private Farbe hintergrundFarbe = Farbe.Schwarz;
 
 	
@@ -166,6 +164,7 @@ public class Zeichner extends View {
 	@Override
 	public void onDraw(Canvas g)
 	{
+		
 		super.onDraw(g);
 		
 		g.drawColor(hintergrundFarbe.alsInt());

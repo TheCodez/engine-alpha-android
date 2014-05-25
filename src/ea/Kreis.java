@@ -20,7 +20,6 @@
 package ea;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import ea.internal.collision.Collider;
 import ea.internal.collision.SphereCollider;
@@ -87,7 +86,7 @@ public class Kreis extends RegEck {
 		
 		Paint p = new Paint();
 		p.setColor(farbe.alsInt());
-		g.drawCircle((position.x - r.x),(position.y - r.y), (radius), p);
+		g.drawCircle((position.x - r.x),(position.y - r.y), radius, p);
 		//g.setColor(this.formen()[0].getColor());
 		//g.fillOval((int) (position.x - r.x), (int) (position.y - r.y), (int) (2 * radius), (int) (2 * radius));
 
