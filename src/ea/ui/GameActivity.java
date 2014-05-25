@@ -24,6 +24,8 @@ public abstract class GameActivity extends Activity
 	
 	@SuppressWarnings("unused")
 	private final Random zufall = new Random();
+	
+	private static GameActivity instanz;
 
 	
 	@Override
@@ -43,7 +45,16 @@ public abstract class GameActivity extends Activity
         setContentView(zeichner);   
         
         init();
+        
+        instanz = this;
     }
+
+	public static GameActivity get()
+	{
+		if(instanz != null)
+			return instanz;
+		return null;
+	}
 	
 	public void titelSetzen(String titel)
 	{
@@ -56,7 +67,13 @@ public abstract class GameActivity extends Activity
 			zeichner.hintergrundFarbeSetzen(farbe);
 	}
 	
-	// Diese Methode sollte in unterklassen ueberschrieben werden
-	protected abstract void init();
+	/**
+	 *  Diese Methode sollte in unterklassen ueberschrieben werden
+	 *  Es sollte immer super.init(); aufgerufen werden sonst kann es zu fehlern kommen
+	 */
+	protected void init()
+	{
+		instanz = this;
+	}
 	
 }
