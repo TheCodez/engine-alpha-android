@@ -1,8 +1,5 @@
-##Engine-Alpha Android
-Versuch die Engine-Alpha auf Android zu porten
+package ea.ui;
 
-##Grundlegendes Beispiel
-```java
 import ea.*;
 
 public class TestActivity extends GameActivity 
@@ -18,4 +15,3 @@ public class TestActivity extends GameActivity
 		
 	}
 }
-```

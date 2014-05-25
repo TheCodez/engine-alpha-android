@@ -28,7 +28,7 @@ public class Farbe
 		this.a = 255;
 	}
 	
-	public int farbeZuInt()
+	public int alsInt()
 	{
 		return Color.rgb(r, g, b);
 	}

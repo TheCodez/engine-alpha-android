@@ -10,10 +10,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /*
- * TODO GameActivity soll abstract werden und als Basic Klasse für jedes Spiel gelten
+ * TODO GameActivity soll abstract werden und als Basic Klasse fuer jedes Spiel gelten
  * 
 */
-public class GameActivity extends Activity
+public abstract class GameActivity extends Activity
 {
 	
 	public Knoten wurzel;
@@ -41,20 +41,12 @@ public class GameActivity extends Activity
 		cam.wurzel().add(wurzel = new Knoten());
         
         setTitle("Engine Alpha Android");
-        setContentView(zeichner);
+        setContentView(zeichner);   
         
-        Kreis k = new Kreis(200 , 180, 80);
-        k.farbeSetzen(Farbe.Gruen);
-        
-        Rechteck r = new Rechteck(screenHeight / 2 - 240, screenHeight / 2 - 120, 120, 120);
-        r.farbeSetzen(Farbe.Weiss);
-        
-        wurzel.add(k);
-        wurzel.add(r);
-        
+        init();
     }
 	
 	// Diese Methode sollte in unterklassen ueberschrieben werden
-	//public abstract void spielStart();
+	public abstract void init();
 	
 }

@@ -113,7 +113,7 @@ public class Rechteck extends Geometrie {
 	public void zeichnen(Canvas g, BoundingRechteck r) {
 	
 		Paint p = new Paint();
-		p.setColor(farbe.farbeZuInt());//(super.formen()[0].getColor());
+		p.setColor(farbe.alsInt());//(super.formen()[0].getColor());
 		
 		if (!r.schneidetBasic(this.dimension()))
 			return;

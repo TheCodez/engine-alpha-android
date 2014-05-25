@@ -36,11 +36,6 @@ import android.view.View;
  */
 public class Zeichner extends View {
 
-
-	public Zeichner(Context context) {
-		super(context);
-	}
-
 	/**
 	 * Das Intervall, in dem das Fenster upgedated wird.
 	 */
@@ -87,7 +82,15 @@ public class Zeichner extends View {
 	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
 	//private Thread thread;
+	
+	private Farbe hintergrundFarbe = Farbe.Schwarz;
 
+	
+	public Zeichner(Context context) {
+		super(context);
+	}
+	
+	
 	/**
 	 * Konstruktor fuer Objekte der Klasse Zeichner
 	 * 
@@ -102,6 +105,10 @@ public class Zeichner extends View {
 		
 		this.groesse = new BoundingRechteck(0, 0, x, y);
 		this.cam = c;
+	}
+	
+	public void hintergrundFarbeSetzen(Farbe farbe) {
+		hintergrundFarbe = farbe;
 	}
 	
 	
@@ -161,7 +168,7 @@ public class Zeichner extends View {
 	{
 		super.onDraw(g);
 		
-		g.drawColor(Color.BLUE);
+		g.drawColor(hintergrundFarbe.alsInt());
 		
 		if(cam != null)
 			cam.zeichne(g);
