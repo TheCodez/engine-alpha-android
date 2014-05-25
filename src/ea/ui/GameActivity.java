@@ -40,13 +40,23 @@ public abstract class GameActivity extends Activity
 		
 		cam.wurzel().add(wurzel = new Knoten());
         
-        setTitle("Engine Alpha Android");
         setContentView(zeichner);   
         
         init();
     }
 	
+	public void titelSetzen(String titel)
+	{
+		setTitle(titel);
+	}
+	
+	public void hintergrundFarbeSetzen(Farbe farbe)
+	{
+		if(zeichner != null)
+			zeichner.hintergrundFarbeSetzen(farbe);
+	}
+	
 	// Diese Methode sollte in unterklassen ueberschrieben werden
-	public abstract void init();
+	protected abstract void init();
 	
 }
