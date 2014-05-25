@@ -82,6 +82,10 @@ public abstract class GameActivity extends Activity
 		
 	}
 	
+	public Zeichner zeichnerGeben()
+	{
+		return zeichner;
+	}
 	
 	public boolean zufallsBoolean() 
 	{
