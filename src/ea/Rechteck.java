@@ -22,7 +22,6 @@ package ea;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import ea.internal.collision.Collider;
 
 /**

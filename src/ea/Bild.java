@@ -47,7 +47,7 @@ public class Bild extends Raum {
 
 	@Override
 	public BoundingRechteck dimension() {
-		return new BoundingRechteck(0, 0, bmp.getWidth(), bmp.getHeight());
+		return new BoundingRechteck(position.x, position.y, bmp.getWidth(), bmp.getHeight());
 	}
 
 	@Override

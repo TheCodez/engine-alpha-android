@@ -12,16 +12,17 @@ import android.os.Bundle;
  * TODO GameActivity soll abstract werden und als Basic Klasse fuer jedes Spiel gelten
  * 
 */
-public abstract class GameActivity extends Activity
+@SuppressWarnings("serial")
+public class GameActivity extends Activity implements Ticker
 {
 	
 	public Knoten wurzel;
 		
-	private Zeichner zeichner;
-	
+	private Zeichner zeichner;	
 	public Kamera cam;
 	
-	@SuppressWarnings("unused")
+	private Manager manager = new Manager();
+	
 	private final Random zufall = new Random();
 	
 	private static GameActivity instanz;
@@ -42,6 +43,8 @@ public abstract class GameActivity extends Activity
 		cam.wurzel().add(wurzel = new Knoten());
         
         setContentView(zeichner);   
+        
+        manager.anmelden(this, 20);
         
         init();
 	}
@@ -73,13 +76,8 @@ public abstract class GameActivity extends Activity
 		instanz = this;
 	}
 	
-	
-	/**
-	 * TODO
-	 */
-	public void tick()
+	public void tick() 
 	{
-		
 	}
 	
 	public Zeichner zeichnerGeben()

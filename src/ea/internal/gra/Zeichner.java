@@ -20,8 +20,8 @@
 package ea.internal.gra;
 
 import ea.*;
+
 import java.util.ArrayList;
-import java.util.Timer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -32,10 +32,8 @@ import android.view.View;
  * 
  * @author Michael Andonie, Niklas Keller <me@kelunik.com>
  */
-public class Zeichner extends View {
-
-	private Timer timer;
-	
+public class Zeichner extends View
+{
 	/**
 	 * Das Intervall, in dem das Fenster upgedated wird.
 	 */
@@ -164,43 +162,14 @@ public class Zeichner extends View {
 	@Override
 	public void onDraw(Canvas g)
 	{
-		
 		super.onDraw(g);
 		
 		g.drawColor(hintergrundFarbe.alsInt());
 		
 		if(cam != null)
 			cam.zeichne(g);
-		/*
-		// Absoluter Hintergrund
-		//g.setColor(Color.black);
-		//g.fillRect(0, 0, (int)groesse.breite, (int)groesse.hoehe);
 		
-		// Relativer Hintergrund
-		if (hintergrund != null) {
-			hintergrund.zeichnenBasic(g, groesse.verschobeneInstanz(new Vektor(
-					cam.getX() / 5, cam.getY() / 10)));
-		}
-		*/
-		// Die Objekte
-		//cam.zeichne(g);
-		
-		/*
-		// Die simplen Grafikobjekte (nicht in Raum)
-		BoundingRechteck camBounds = cam.position();
-		for (SimpleGraphic gr : simples) {
-			gr.paint(g, (int)camBounds.x, (int)camBounds.y);
-		}
-		
-		// Die statischen Objekte
-		statNode.zeichnen(g, groesse);
-		
-		// Die Maus
-		if (vordergrund != null) {
-			vordergrund.zeichnen(g, groesse);
-		}
-		
-*/
+		invalidate();
 	}
 	
 }
