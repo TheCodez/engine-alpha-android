@@ -82,13 +82,10 @@ public class Zeichner extends View
 	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
 	private Farbe hintergrundFarbe = Farbe.Schwarz;
-	
-	private GameActivity activity;
 
 	
-	public Zeichner(Context context, GameActivity g) {
+	public Zeichner(Context context) {
 		super(context);
-		activity = g;
 	}
 	
 	
@@ -180,7 +177,7 @@ public class Zeichner extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
 	{
-		activity.touch(event);
+		((GameActivity)getContext()).touch(event);
 		
 		return true;
 	}

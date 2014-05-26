@@ -41,7 +41,7 @@ public abstract class GameActivity extends Activity implements Ticker
         hoehe = getWindowManager().getDefaultDisplay().getHeight();
         
         cam = new Kamera(breite, hoehe, new Zeichenebene());
-		zeichner = new Zeichner(this, this);
+		zeichner = new Zeichner(this);
 		zeichner.init(breite, hoehe, cam);
 		
 		cam.wurzel().add(wurzel = new Knoten());
