@@ -20,11 +20,13 @@
 package ea.internal.gra;
 
 import ea.*;
+import ea.ui.GameActivity;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -80,10 +82,13 @@ public class Zeichner extends View
 	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
 	private Farbe hintergrundFarbe = Farbe.Schwarz;
+	
+	private GameActivity activity;
 
 	
-	public Zeichner(Context context) {
+	public Zeichner(Context context, GameActivity g) {
 		super(context);
+		activity = g;
 	}
 	
 	
@@ -170,6 +175,14 @@ public class Zeichner extends View
 			cam.zeichne(g);
 		
 		invalidate();
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) 
+	{
+		activity.touch(event);
+		
+		return true;
 	}
 	
 }

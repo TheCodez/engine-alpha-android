@@ -7,13 +7,14 @@ import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 /*
  * TODO GameActivity soll abstract werden und als Basic Klasse fuer jedes Spiel gelten
  * 
 */
 @SuppressWarnings("serial")
-public class GameActivity extends Activity implements Ticker
+public abstract class GameActivity extends Activity implements Ticker
 {
 	
 	public Knoten wurzel;
@@ -26,6 +27,9 @@ public class GameActivity extends Activity implements Ticker
 	private final Random zufall = new Random();
 	
 	private static GameActivity instanz;
+	
+	public int breite;
+	public int hoehe;
 
 	
 	@Override
@@ -33,20 +37,36 @@ public class GameActivity extends Activity implements Ticker
 	{
         super.onCreate(savedInstanceState);
         
-        final int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        final int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+        breite = getWindowManager().getDefaultDisplay().getWidth();
+        hoehe = getWindowManager().getDefaultDisplay().getHeight();
         
-        cam = new Kamera(screenWidth, screenHeight, new Zeichenebene());
-		zeichner = new Zeichner(this);
-		zeichner.init(screenWidth, screenHeight, cam);
+        cam = new Kamera(breite, hoehe, new Zeichenebene());
+		zeichner = new Zeichner(this, this);
+		zeichner.init(breite, hoehe, cam);
 		
 		cam.wurzel().add(wurzel = new Knoten());
         
         setContentView(zeichner);   
         
-        manager.anmelden(this, 20);
+        manager.anmelden(this, 10);
         
-        init();
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		
+		init();
+	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		if(wurzel != null)
+			wurzel.leeren();
+		
+		super.onDestroy();
 	}
 
 	public static GameActivity get()
@@ -78,6 +98,11 @@ public class GameActivity extends Activity implements Ticker
 	
 	public void tick() 
 	{
+	}
+	
+	public void touch(MotionEvent event)
+	{
+		
 	}
 	
 	public Zeichner zeichnerGeben()

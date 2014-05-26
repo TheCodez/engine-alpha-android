@@ -114,8 +114,8 @@ public class Rechteck extends Geometrie {
 		Paint p = new Paint();
 		p.setColor(farbe.alsInt());//(super.formen()[0].getColor());
 		
-		if (!r.schneidetBasic(this.dimension()))
-			return;
+		//if (!r.schneidetBasic(this.dimension()))
+		//	return;
 		
 		g.drawRect(position.x - r.x, position.y - r.y, position.x + breite, position.y + hoehe, p);
 	}

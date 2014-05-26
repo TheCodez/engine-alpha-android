@@ -11,13 +11,13 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="Engine Alpha"
+        android:theme="@android:style/Theme.NoTitleBar" >
         <activity
             android:name="ea.test.TestActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:label="Engine Alpha"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

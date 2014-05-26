@@ -17,7 +17,7 @@ import java.util.Queue;
 public class CollisionHandling {
 	
 	static {
-		//Manager.standard.anmelden(new CollisionRoutine(), ea.internal.gra.Zeichner.UPDATE_INTERVALL);
+		Manager.standard.anmelden(new CollisionRoutine(), ea.internal.gra.Zeichner.UPDATE_INTERVALL);
 		new CollisionConsumer().start();
 	}
 	

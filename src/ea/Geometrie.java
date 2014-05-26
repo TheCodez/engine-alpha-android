@@ -54,7 +54,7 @@ public abstract class Geometrie extends Raum implements Listung {
 	 *            Die bestimmende Y-Koordinate
 	 */
 	public Geometrie(float x, float y) {
-		position = new Punkt(x, y);
+		super.position = new Punkt(x, y);
 		dimension = new BoundingRechteck(x, y, 0, 0);
 	}
 	
