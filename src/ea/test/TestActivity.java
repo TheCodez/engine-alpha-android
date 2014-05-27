@@ -1,5 +1,7 @@
 package ea.test;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
 import android.view.MotionEvent;
 import ea.*;
 import ea.ui.GameActivity;
@@ -8,15 +10,13 @@ public class TestActivity extends GameActivity
 {
 	private Rechteck box;
 	private Bild bild;
-	private Text f;
-	
-	private Vektor verschiebung = new Vektor(140, 140);
+	private Text text;
+		
+	private float verschX = 0;
 	
 	@Override
 	public void init() 
 	{
-		super.init();
-		
 		hintergrundFarbeSetzen(Farbe.HimmelBlau);
 		
         box = new Rechteck(180, 320, 120, 120);
@@ -24,51 +24,43 @@ public class TestActivity extends GameActivity
         
         bild = new Bild(140, 140, "logo.png");
         
-        Text t = new Text(160, 550, "Test");
-        t.setzeGroesse(80);
-        t.unterstrichenSetzen(true);
-        
-        f = new Text(120, 640, "Farbig!!");
-        f.farbeSetzen(Farbe.Gruen);
-        f.setzeGroesse(80);
+        text = new Text(120, 640, "Farbig!!");
+        text.farbeSetzen(Farbe.Gruen);
+        text.setzeGroesse(80);
         
         wurzel.add(box);
         wurzel.add(bild);
-        wurzel.add(t);
-        wurzel.add(f);
-	}
+        wurzel.add(text);
+    }
         
 	@Override
 	public void tick()
 	{
-		bild.positionSetzen(verschiebung.x, verschiebung.y);
+		bild.verschieben(new Vektor(verschX, 0));
 	}
 	
 	@Override
-	public void touch(MotionEvent event)
+	public void touch(float x, float y, MotionEvent event)
 	{
-		float eventX = event.getX();
-	    float eventY = event.getY();
-	    BoundingRechteck r = new BoundingRechteck(eventX, eventY, 180, 180);
-	    BoundingRechteck tr = new BoundingRechteck(eventX, eventY, 80, 80);
+	    BoundingRechteck tr = new BoundingRechteck(x, y, 80, 80);
 
 	    switch (event.getAction()) 
 	    {
 	    	case MotionEvent.ACTION_DOWN:
-	    		eventX = event.getX();
-	    	    eventY = event.getY();
-	    		if(tr.schneidetBasic(f.dimension()))
-	    			f.farbeSetzen(Farbe.Rot);	
+	    		if(tr.schneidetBasic(text.dimension()))
+	    			text.farbeSetzen(Farbe.Rot);	
 	    		break;
 	    	case MotionEvent.ACTION_UP:
-    			f.farbeSetzen(Farbe.Gruen);	
-	    		break;
-	    	case MotionEvent.ACTION_MOVE:
-	    		eventX = event.getX();
-	    	    eventY = event.getY();
-	    		if(r.schneidetBasic(bild.dimension()))
-	    			verschiebung = new Vektor(event.getX(), event.getY());
+	    		text.farbeSetzen(Farbe.Gruen);	
 	    		break;
 	    }
+	}
+	
+	public void sensorBewegung(float x, float y, float z, Sensor sensor)
+	{
+		float xWert = Math.round(x);
+		text.textSetzen(String.valueOf(xWert));
+		
+		verschX = -xWert;
 	}
 }

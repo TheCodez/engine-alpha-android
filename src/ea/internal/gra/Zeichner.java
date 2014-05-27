@@ -22,8 +22,6 @@ package ea.internal.gra;
 import ea.*;
 import ea.ui.GameActivity;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -58,28 +56,9 @@ public class Zeichner extends View
 	private Knoten statNode = new Knoten();
 	
 	/**
-	 * Der Relative Hintergrund, ist immer das Hinterste.
-	 */
-	private Raum hintergrund;
-	
-	/**
-	 * Der Absolute Vordergrund. Er liegt immer im Zentrum<br />
-	 * Reserviert fuer die Absolute Maus.
-	 */
-	private Raum vordergrund;
-	
-	/**
 	 * Gibt an, ob der Thread noch arbeiten soll.
 	 */
 	//private boolean work = true;
-	
-	/**
-	 * Die Liste der einfachen Geometrischen Koerper, die gezeichnet werden
-	 * sollen.
-	 * 
-	 * @see ea.SimpleGraphic
-	 */
-	private final ArrayList<SimpleGraphic> simples = new ArrayList<SimpleGraphic>();
 
 	private Farbe hintergrundFarbe = Farbe.Schwarz;
 
@@ -131,7 +110,7 @@ public class Zeichner extends View
 	 *            Der neue Vordergrund
 	 */
 	public void anmelden(Raum vordergrund) {
-		this.vordergrund = vordergrund;
+		//this.vordergrund = vordergrund;
 	}
 	
 	/**
@@ -141,14 +120,14 @@ public class Zeichner extends View
 	 *            Der neue Hintergrund
 	 */
 	public void hintergrundAnmelden(Raum hintergrund) {
-		this.hintergrund = hintergrund;
+		//this.hintergrund = hintergrund;
 	}
 	
 	/**
 	 * Loescht den absoluten Vordergrund
 	 */
 	void vordergrundLoeschen() {
-		vordergrund = null;
+		//vordergrund = null;
 	}
 	
 	/**
@@ -177,7 +156,9 @@ public class Zeichner extends View
 	@Override
 	public boolean onTouchEvent(MotionEvent event) 
 	{
-		((GameActivity)getContext()).touch(event);
+		super.onTouchEvent(event);
+		
+		((GameActivity)getContext()).touch(event.getX(), event.getY(), event);
 		
 		return true;
 	}

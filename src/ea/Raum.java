@@ -54,20 +54,6 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	private double lastDrehung;
 	
 	/**
-	 * Ein einfacher Farbzyklus, der fuer die Leucht-Animationen genommen wird
-	 */
-	public static final int[] farbzyklus = {
-		Color.WHITE,
-		Color.BLUE,
-		Color.RED,
-		Color.YELLOW,
-		Color.MAGENTA,
-		Color.CYAN,
-		Color.GREEN,
-		Color.YELLOW,
-	};
-	
-	/**
 	 * Gibt an, ob das Objekt zur Zeit ueberhaupt sichtbar sein soll.<br />
 	 * Ist dies nicht der Fall, so wird die Zeichenroutine direkt uebergangen.
 	 */

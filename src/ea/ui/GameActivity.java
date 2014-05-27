@@ -6,15 +6,26 @@ import ea.*;
 import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
+
+enum BildOrientation
+{
+	Portrait,
+	Landschaft
+}
 
 /*
  * TODO GameActivity soll abstract werden und als Basic Klasse fuer jedes Spiel gelten
  * 
 */
-@SuppressWarnings("serial")
-public abstract class GameActivity extends Activity implements Ticker
+public abstract class GameActivity extends Activity implements Ticker, SensorEventListener
 {
 	
 	public Knoten wurzel;
@@ -22,7 +33,7 @@ public abstract class GameActivity extends Activity implements Ticker
 	private Zeichner zeichner;	
 	public Kamera cam;
 	
-	private Manager manager = new Manager();
+	protected Manager manager;
 	
 	private final Random zufall = new Random();
 	
@@ -30,7 +41,12 @@ public abstract class GameActivity extends Activity implements Ticker
 	
 	public int breite;
 	public int hoehe;
+	
+	public boolean tick;
 
+	
+	private SensorManager sensorManager;
+	private Sensor sensor;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -48,7 +64,13 @@ public abstract class GameActivity extends Activity implements Ticker
         
         setContentView(zeichner);   
         
-        manager.anmelden(this, 10);
+        manager = new Manager();
+        
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
+        
+        instanz = this; 
         
 	}
 	
@@ -58,15 +80,45 @@ public abstract class GameActivity extends Activity implements Ticker
 		super.onStart();
 		
 		init();
+		
+		manager.anmelden(this, 20);
 	}
 	
 	@Override
 	protected void onDestroy()
 	{
+		super.onDestroy();
+		
 		if(wurzel != null)
 			wurzel.leeren();
 		
-		super.onDestroy();
+	}
+	
+	@Override
+	protected void onPause() 
+	{
+	    super.onPause();
+	    sensorManager.unregisterListener(this);
+	    manager.anhalten(this);
+	}
+		
+	@Override
+	protected void onResume()
+	{
+	    super.onResume();
+	    sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+	    manager.starten(this, 20);
+	}
+	
+	public void tickerIntervallSetzen(int intervall)
+	{
+		manager.abmelden(this);
+		manager.anmelden(this, intervall);
+	}
+	
+	public void tickerStoppen()
+	{
+		manager.anhalten(this);
 	}
 
 	public static GameActivity get()
@@ -78,6 +130,7 @@ public abstract class GameActivity extends Activity implements Ticker
 	
 	public void titelSetzen(String titel)
 	{
+		
 		setTitle(titel);
 	}
 	
@@ -87,20 +140,31 @@ public abstract class GameActivity extends Activity implements Ticker
 			zeichner.hintergrundFarbeSetzen(farbe);
 	}
 	
-	/**
-	 *  Diese Methode sollte in unterklassen ueberschrieben werden
-	 *  Es sollte immer super.init(); aufgerufen werden sonst kann es zu fehlern kommen
-	 */
-	protected void init()
+	
+	public void setzeOrientation(BildOrientation orientation)
 	{
-		instanz = this;
+		if(orientation == BildOrientation.Landschaft)
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		else
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
+	
+	/**
+	 *  Diese Methode muss in unterklassen ueberschrieben werden
+	 */
+	public abstract void init();
 	
 	public void tick() 
 	{
+		tick = !tick;
 	}
 	
-	public void touch(MotionEvent event)
+	public void touch(float x, float y, MotionEvent event)
+	{
+		
+	}
+	
+	public void sensorBewegung(float x, float y, float z, Sensor sensor)
 	{
 		
 	}
@@ -122,6 +186,23 @@ public abstract class GameActivity extends Activity implements Ticker
 			System.err.println("Achtung!! Fuer eine Zufallszahl muss die definierte Obergrenze (die inklusiv in der Ergebnismenge ist) eine nichtnegative Zahl sein!!");
 		}
 		return zufall.nextInt(obergrenze + 1);
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		Sensor s = event.sensor;
+		
+		float x = event.values[0];
+		float y = event.values[1];
+		float z = event.values[2];
+		
+		sensorBewegung(x, y, z, s);
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
