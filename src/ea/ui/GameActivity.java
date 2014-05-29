@@ -8,6 +8,7 @@ import ea.internal.gra.Zeichner;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -64,8 +65,6 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         
         setContentView(zeichner);   
         
-        manager = new Manager();
-        
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
@@ -81,7 +80,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		
 		init();
 		
-		manager.anmelden(this, 20);
+		manager = new Manager();
+		manager.anmelden(this, 10);
 	}
 	
 	@Override
@@ -95,11 +95,23 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	}
 	
 	@Override
+	public void onConfigurationChanged(Configuration newConfig) 
+	{
+	    super.onConfigurationChanged(newConfig);
+	    
+	    final int alteBreite = breite;
+	    final int alteHoehe = hoehe;
+	    
+	    breite = alteHoehe;
+	    hoehe = alteBreite;
+	}
+	
+	@Override
 	protected void onPause() 
 	{
 	    super.onPause();
 	    sensorManager.unregisterListener(this);
-	    manager.anhalten(this);
+	    //manager.anhalten(this);
 	}
 		
 	@Override
@@ -107,7 +119,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 	    super.onResume();
 	    sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-	    manager.starten(this, 20);
+	    //manager.starten(this, 20);
 	}
 	
 	public void tickerIntervallSetzen(int intervall)
@@ -154,10 +166,10 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	 */
 	public abstract void init();
 	
-	public void tick() 
-	{
-		tick = !tick;
-	}
+    public void tick()
+    {
+    	
+    }
 	
 	public void touch(float x, float y, MotionEvent event)
 	{
@@ -197,6 +209,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		float z = event.values[2];
 		
 		sensorBewegung(x, y, z, s);
+		
+		zeichner.invalidate();
 	}
 
 	@Override

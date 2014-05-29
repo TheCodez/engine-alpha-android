@@ -3,44 +3,59 @@ package ea;
 import java.util.ArrayList;
 
 import android.graphics.Canvas;
+import ea.internal.collision.BoxCollider;
 import ea.internal.collision.Collider;
+import ea.internal.collision.ColliderGroup;
+import ea.internal.gra.FigurData;
+import ea.internal.gra.PixelFeld;
 
-@SuppressWarnings("serial")
 public class Figur extends Raum {
 
 	private static ArrayList<Figur> figuren;
 	private boolean spiegelX;
 	private boolean spiegelY;
 	
+	private PixelFeld[] animation;
+	private int intervall = 100;
+	private int aktuelle;
+	
+	private boolean animiert = true;
+	
 	static 
 	{
 		figuren = new ArrayList<Figur>();
 		
-		Manager.standard.anmelden((new Ticker() {
-			int runde = 0;
-
-			@Override
-			public void tick() {
-				runde++;
-				try {
-					/*
-					for (Figur f : liste) {
-						if (f.animiert()) {
-							f.animationsSchritt(runde);
+		if(figuren.size() != 0)
+		{
+			Manager.standard.anmelden((new Ticker() {
+				int runde = 0;
+	
+				@Override
+				public void tick() {
+					runde++;
+					try {
+						
+						for (Figur f : figuren) {
+							if (f.animiert()) {
+								f.animationsSchritt(runde);
+							}
 						}
+						
+					} catch (java.util.ConcurrentModificationException e) {
 					}
-					*/
-				} catch (java.util.ConcurrentModificationException e) {
-					//
 				}
-			}
-		}), 1);
+			}), 1);
+		}
 	}
 	
 	public Figur(float x, float y, String verzeichnis)
 	{
-		super();
 		super.position = new Punkt(x, y);
+
+		animation = new PixelFeld[20];
+		animation[0] = new PixelFeld(40, 40, 3);
+		//this.animation = FigurData.figurEinlesen(verzeichnis).feld;
+		
 		figuren.add(this);
 	}
 	
@@ -51,20 +66,26 @@ public class Figur extends Raum {
 	
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) {
-		// TODO Auto-generated method stub
+		animation[aktuelle].zeichnen(g, (int) (position.x - r.x), (int) (position.y - r.y), spiegelX, spiegelY);
 
 	}
 
 	@Override
 	public BoundingRechteck dimension() {
-		// TODO Auto-generated method stub
-		return null;
+		if (animation != null && animation[aktuelle] != null) {
+			return new BoundingRechteck(position.x, position.y, animation[0].breite(), animation[0].hoehe());
+		} else {
+			return new BoundingRechteck(position.x, position.y, animation[aktuelle].breite(), animation[aktuelle].hoehe());
+		}
 	}
 
 	@Override
 	public Collider erzeugeCollider() {
-		// TODO Auto-generated method stub
-		return null;
+		ColliderGroup gc = new ColliderGroup();
+		for(BoundingRechteck r : flaechen()) {
+			gc.addCollider(BoxCollider.fromBoundingRechteck(new Vektor(r.x, r.y), r));
+		}
+		return gc;
 	}
 
 	public boolean spiegelXGeben() {
@@ -81,6 +102,23 @@ public class Figur extends Raum {
 
 	public void setzeSpiegelY(boolean spiegelY) {
 		this.spiegelY = spiegelY;
+	}
+	
+	public boolean animiert()
+	{
+		return animiert;
+	}
+	
+	public void animationsSchritt(int runde)
+	{
+		if (runde % intervall  != 0) {
+			return;
+		}
+		if (aktuelle == animation.length - 1) {
+			aktuelle = 0;
+		} else {
+			aktuelle++;
+		}
 	}
 
 }

@@ -20,8 +20,8 @@
 package ea.internal.gra;
 
 import ea.*;
+import ea.ui.Button;
 import ea.ui.GameActivity;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -159,6 +159,16 @@ public class Zeichner extends View
 		super.onTouchEvent(event);
 		
 		((GameActivity)getContext()).touch(event.getX(), event.getY(), event);
+		
+		
+		// Testet ein touch event fuer Knöpfe
+		for(Raum b : ((GameActivity)getContext()).wurzel.alleElemente())
+		{
+			if(b instanceof Button)
+			{
+				((Button)b).touch(event.getX(), event.getY(), event);
+			}
+		}
 		
 		return true;
 	}

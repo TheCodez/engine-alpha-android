@@ -30,7 +30,7 @@ import ea.internal.collision.Collider;
  * @author Michael Andonie
  */
 @SuppressWarnings("serial")
-public class Rechteck extends Geometrie {
+public class Rechteck extends Raum {
 	/**
 	 * Die Laenge
 	 */
@@ -54,10 +54,10 @@ public class Rechteck extends Geometrie {
 	 *            Die hoehe des Rechtecks
 	 */
 	public Rechteck(float x, float y, float breite, float hoehe) {
-		super(x, y);
+		super.position = new Punkt(x, y);
 		this.breite = breite;
 		this.hoehe = hoehe;
-		aktualisierenFirst();
+		//aktualisierenFirst();
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class Rechteck extends Geometrie {
 	public void masseSetzen(int breite, int hoehe) {
 		this.breite = breite;
 		this.hoehe = hoehe;
-		aktualisieren();
+		//aktualisieren();
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class Rechteck extends Geometrie {
 	 */
 	public void breiteSetzen(int breite) {
 		this.breite = breite;
-		aktualisieren();
+		//aktualisieren();
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class Rechteck extends Geometrie {
 	 */
 	public void hoeheSetzen(int hoehe) {
 		this.hoehe = hoehe;
-		aktualisieren();
+		//aktualisieren();
 	}
 
 	
@@ -128,5 +128,10 @@ public class Rechteck extends Geometrie {
 	@Override
 	public Collider erzeugeCollider() {
 		return erzeugeLazyCollider();
+	}
+
+	@Override
+	public BoundingRechteck dimension() {
+		return new BoundingRechteck(position.x, position.y, breite, hoehe);
 	}
 }

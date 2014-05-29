@@ -109,4 +109,9 @@ public class Kreis extends RegEck {
 			return 0;
 		return 1 + log2helper(eckenzahl/2);
 	}
+
+	@Override
+	public BoundingRechteck dimension() {
+		return new BoundingRechteck(position.x, position.y, radius * 2, radius * 2);
+	}
 }

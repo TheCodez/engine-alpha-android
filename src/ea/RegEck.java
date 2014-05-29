@@ -27,7 +27,7 @@ package ea;
  * @author Michael Andonie
  */
 @SuppressWarnings("serial")
-public class RegEck extends Geometrie {
+public abstract class RegEck extends Raum {
 	/**
 	 * Die Anzahl an Ecken.<br />
 	 * Es kann keine Form mit weniger als 3 Ecken geben!
@@ -52,10 +52,10 @@ public class RegEck extends Geometrie {
 	 *            Der Durchmesser des Kreises, der das n-Eck umschreibt
 	 */
 	public RegEck(float x, float y, int ecken, float durchmesser) {
-		super(x, y);
+		super.position = new Punkt(x, y);
 		eckenzahl = ecken;
 		this.radius = durchmesser / 2;
-		aktualisierenFirst();
+		//aktualisierenFirst();
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class RegEck extends Geometrie {
 	 */
 	public void durchmesserSetzen(int durchmesser) {
 		this.radius = durchmesser / 2;
-		aktualisieren();
+		//aktualisieren();
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class RegEck extends Geometrie {
 	 */
 	public void radiusSetzen(int radius) {
 		this.radius = radius;
-		aktualisieren();
+		//aktualisieren();
 	}
 	
 }
