@@ -6,8 +6,8 @@ import java.io.InputStream;
 import android.content.res.AssetManager;
 import android.graphics.*;
 import android.net.Uri;
+import ea.android.GameActivity;
 import ea.internal.collision.Collider;
-import ea.ui.GameActivity;
 
 @SuppressWarnings("serial")
 public class Bild extends Raum {

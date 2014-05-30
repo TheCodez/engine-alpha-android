@@ -1,5 +1,5 @@
 ##Engine-Alpha Android
-Versuch die Engine-Alpha auf Android zu porten
+Eine auf Android geportete Engine-Alpha
 
 ##Verwenden in Eclipse
 
@@ -12,15 +12,13 @@ Wichtig: Das Android SDK muss installiert sein, sonst kommt es zu Fehlern.
 ##Grundlegendes Beispiel
 ```java
 import ea.*;
-import ea.ui.GameActivity;
+import ea.android.GameActivity;
 
 public class TestActivity extends GameActivity 
 {
 	@Override
 	public void init() 
 	{
-		super.init();
-	
         Rechteck box = new Rechteck(180, 320, 120, 120);
         box.farbeSetzen(Farbe.Gruen);
         

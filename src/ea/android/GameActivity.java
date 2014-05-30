@@ -1,4 +1,4 @@
-package ea.ui;
+package ea.android;
 
 import java.util.Random;
 
@@ -70,19 +70,13 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
         
         instanz = this; 
-        
-	}
-	
-	@Override
-	protected void onStart()
-	{
-		super.onStart();
-		
-		init();
 		
 		manager = new Manager();
 		manager.anmelden(this, 10);
+		
+		init();
 	}
+
 	
 	@Override
 	protected void onDestroy()
@@ -209,8 +203,6 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		float z = event.values[2];
 		
 		sensorBewegung(x, y, z, s);
-		
-		zeichner.invalidate();
 	}
 
 	@Override

@@ -20,8 +20,8 @@
 package ea.internal.gra;
 
 import ea.*;
+import ea.android.GameActivity;
 import ea.ui.Button;
-import ea.ui.GameActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
