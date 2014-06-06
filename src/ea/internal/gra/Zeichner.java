@@ -158,7 +158,7 @@ public class Zeichner extends View
 	{
 		super.onTouchEvent(event);
 		
-		((GameActivity)getContext()).touch(event.getX(), event.getY(), event);
+		((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), event);
 		
 		
 		// Testet ein touch event fuer Knöpfe

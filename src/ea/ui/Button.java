@@ -46,7 +46,7 @@ public class Button extends Raum
 	    switch (event.getAction()) 
 	    {
 	    	case MotionEvent.ACTION_DOWN:
-	    		if(br.schneidetBasic(this.dimension()))
+	    		if(this.dimension().istIn(new Punkt(x, y)))
 	    		{
 	    			istGedrueckt = true;
 	    			if(b != null)

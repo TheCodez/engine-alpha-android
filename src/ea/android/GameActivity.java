@@ -14,6 +14,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 
 enum BildOrientation
@@ -48,6 +49,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	
 	private SensorManager sensorManager;
 	private Sensor sensor;
+	private Vibrator vibrator;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -68,6 +70,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
+        
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         
         instanz = this; 
 		
@@ -146,6 +150,11 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 			zeichner.hintergrundFarbeSetzen(farbe);
 	}
 	
+	public void vibrieren(long milliSekunden)
+	{
+		vibrator.vibrate(milliSekunden);
+	}
+	
 	
 	public void setzeOrientation(BildOrientation orientation)
 	{
@@ -165,12 +174,12 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
     	
     }
 	
-	public void touch(float x, float y, MotionEvent event)
+	public void touchReagieren(float x, float y, MotionEvent event)
 	{
 		
 	}
 	
-	public void sensorBewegung(float x, float y, float z, Sensor sensor)
+	public void sensorReagieren(float x, float y, float z, Sensor sensor)
 	{
 		
 	}
@@ -202,7 +211,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		float y = event.values[1];
 		float z = event.values[2];
 		
-		sensorBewegung(x, y, z, s);
+		sensorReagieren(x, y, z, s);
 	}
 
 	@Override
