@@ -1,6 +1,10 @@
 ##Engine-Alpha Android
 Eine auf Android geportete Engine-Alpha
 
+##Verwendung:
+1. Die [engine-alpha-android.jar](https://github.com/skatermichi/engine-alpha-android/releases/download/0.8/engine-alpha-android.jar) herunterladen.
+2. Die engine-alpha-android.jar in "libs" Ordner des Projekts kopieren.
+
 ##Grundlegendes Beispiel
 ```java
 import ea.*;
