@@ -41,8 +41,6 @@ public class Button extends Raum
 	
 	public void touch(float x, float y, MotionEvent event)
 	{
-		BoundingRechteck br = new BoundingRechteck(x, y, 80, 80);
-
 	    switch (event.getAction()) 
 	    {
 	    	case MotionEvent.ACTION_DOWN:

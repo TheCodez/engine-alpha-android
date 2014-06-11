@@ -1,14 +1,6 @@
 ##Engine-Alpha Android
 Eine auf Android geportete Engine-Alpha
 
-##Verwenden in Eclipse
-
-Wichtig: Das Android SDK muss installiert sein, sonst kommt es zu Fehlern.
-
-1. In Eclipse File, dann Import Existing Android Code Into Workspace
-2. Bei Root Directory, den Ordner von Github auswählen und auf Finish drücken
-
-
 ##Grundlegendes Beispiel
 ```java
 import ea.*;
