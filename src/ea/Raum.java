@@ -104,6 +104,16 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 		farbeSetzen(Farbe.vonString(farbe));
 	}
 	
+	public void setzeFarbe(String farbe)
+	{
+		farbeSetzen(Farbe.vonString(farbe));
+	}
+	
+	public void setzeFarbe(Farbe farbe)
+	{
+		farbeSetzen(farbe);
+	}
+	
 	/**
 	 * Setzt den Z-Index dieses Raumes. Je größer, desto weiter vorne wird ein Raum gezeichnet.
 	 * <b>Diese Methode muss ausgeführt werden, bevor der Raum zu einem Knoten hinzugefügt wird.</b>

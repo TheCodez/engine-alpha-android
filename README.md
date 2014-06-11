@@ -12,10 +12,12 @@ import ea.android.GameActivity;
 
 public class TestActivity extends GameActivity 
 {
+	private Rechteck box;
+	
 	@Override
 	public void init() 
 	{
-        Rechteck box = new Rechteck(180, 320, 120, 120);
+        box = new Rechteck(180, 320, 120, 120);
         box.farbeSetzen(Farbe.Gruen);
         
         wurzel.add(box);
@@ -26,11 +28,10 @@ public class TestActivity extends GameActivity
 ##Fortgeschrittenes Beispiel
 ```java
 import ea.*;
-import ea.android.GameActivity;
+import ea.android.*;
 import android.hardware.Sensor;
-import android.view.MotionEvent;
 
-public class Test extends GameActivity 
+public class TestActivity extends GameActivity 
 {
 	private Rechteck box;
 	private float verschX;
@@ -51,13 +52,13 @@ public class Test extends GameActivity
     }
     
     @Override
-    public void touchReagieren(float x, float y, MotionEvent event)
+    public void touchReagieren(float x, float y, TouchEvent event)
 	{
-		if(event.getAction() == MotionEvent.ACTION_DOWN)
+		if(event == TouchEvent.Gedrueckt)
 		{
 			box.sichtbarSetzen(false);
 		}
-		else if(event.getAction() == MotionEvent.ACTION_UP)
+		else if(event == TouchEvent.Losgelassen)
 		{
 			box.sichtbarSetzen(true);
 		}

@@ -174,7 +174,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
     	
     }
 	
-	public void touchReagieren(float x, float y, MotionEvent event)
+	public void touchReagieren(float x, float y, TouchEvent event)
 	{
 		
 	}

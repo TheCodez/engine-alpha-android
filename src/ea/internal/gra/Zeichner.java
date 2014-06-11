@@ -21,6 +21,7 @@ package ea.internal.gra;
 
 import ea.*;
 import ea.android.GameActivity;
+import ea.android.TouchEvent;
 import ea.ui.Button;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -158,7 +159,8 @@ public class Zeichner extends View
 	{
 		super.onTouchEvent(event);
 		
-		((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), event);
+		//((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), event);
+		((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
 		
 		
 		// Testet ein touch event fuer Knöpfe
@@ -171,6 +173,18 @@ public class Zeichner extends View
 		}
 		
 		return true;
+	}
+	
+	private TouchEvent touchEventConvertieren(MotionEvent event)
+	{
+		TouchEvent e = TouchEvent.Keins;
+		
+		if(event.getAction() == MotionEvent.ACTION_DOWN)
+			e = TouchEvent.Gedrueckt;
+		else if(event.getAction() == MotionEvent.ACTION_UP)
+			e = TouchEvent.Losgelassen;
+		
+		return e;
 	}
 	
 }
