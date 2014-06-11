@@ -10,14 +10,12 @@ public class Text extends Raum
 	private boolean istUnterstrichen;
 	private float groesse;
 	private String text;
-	private boolean glatt;
 	public Text(float x, float y, String text, float textGroesse)
 	{
 		super.position = new Punkt(x, y);
 		this.text = text;
 		groesse = textGroesse;
 		farbeSetzen(Farbe.Schwarz);
-		glatt = true;
 	}
 	
 	public Text(float x, float y, String text)
@@ -42,6 +40,11 @@ public class Text extends Raum
 	{
 		this.text = text;
 	}
+	
+	public String textGeben()
+	{
+		return text;
+	}
 
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) {
@@ -49,7 +52,7 @@ public class Text extends Raum
 		p.setUnderlineText(istUnterstrichen);
 		p.setTextSize(groesse);
 		p.setColor(farbe.alsInt());
-		p.setAntiAlias(glatt);
+		p.setAntiAlias(istGlatt());
 		
 		if(r.schneidetBasic(this.dimension())) {
 			g.drawText(text, position.x - r.x, position.y - r.y, p);
@@ -58,6 +61,7 @@ public class Text extends Raum
 
 	@Override
 	public BoundingRechteck dimension() {
+		//TODO Textbreite und Hoehe
 		return new BoundingRechteck(position.x, position.y, (text.length() * groesse) / 2.5f , groesse);
 	}
 
@@ -72,13 +76,5 @@ public class Text extends Raum
 
 	public void setzeGroesse(float groesse) {
 		this.groesse = groesse;
-	}
-
-	public boolean istGlatt() {
-		return glatt;
-	}
-
-	public void setzeGlatt(boolean glatt) {
-		this.glatt = glatt;
 	}
 }

@@ -268,18 +268,6 @@ public class PixelFeld implements java.io.Serializable {
 			}
 
 		int w = breite(), h = hoehe();
-
-		/*
-		int[][] col = new int[1][];
-		for(int i = 0; i < farbe.length; i++)
-		{
-			for(int j = 0; j < farbe[0].length; j++)
-			{
-				col[i][j] = farbe[i][j].alsInt();
-			}
-					
-		}
-		*/
 		
 		//g.drawBitmap(col, 0, 4, x + w, y + h, width, height, true, new Paint());
 		

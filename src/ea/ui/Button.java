@@ -9,6 +9,7 @@ import ea.Farbe;
 import ea.Manager;
 import ea.Punkt;
 import ea.Raum;
+import ea.Text;
 import ea.Ticker;
 import ea.Vektor;
 import ea.internal.collision.Collider;
@@ -22,6 +23,8 @@ public class Button extends Raum
 	
 	private Bild normalBild;
 	private Bild gedruecktBild;
+	
+	private Text buttonText;
 	
 	public Button(float x, float y, ButtonDefinition bd)
 	{
@@ -58,17 +61,23 @@ public class Button extends Raum
 	}
 	
 	@Override
-	public void zeichnen(Canvas g, BoundingRechteck r) {
+	public void zeichnen(Canvas g, BoundingRechteck r) 
+	{
 		if(gedruecktBild.bild() != null && normalBild.bild() != null)
 		{
+			Paint p = new Paint();
+			p.setAntiAlias(istGlatt());
+			
 			if(istGedrueckt)
 			{
-				g.drawBitmap(gedruecktBild.bild(), position.x, position.y, new Paint());
+				g.drawBitmap(gedruecktBild.bild(), position.x, position.y, p);
 			}
 			else
 			{
-				g.drawBitmap(normalBild.bild(), position.x, position.y, new Paint());
+				g.drawBitmap(normalBild.bild(), position.x, position.y, p);
 			}
+			
+			//g.drawText(buttonText.textGeben(), position.x + (dimension().breite - buttonText.dimension().breite) / 2, position.y + 18, p );
 		}
 			
 	}

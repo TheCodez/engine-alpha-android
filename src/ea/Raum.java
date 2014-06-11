@@ -85,6 +85,8 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * Speichert die aktuelle Drehung des Raumes.
 	 */
 	private double drehung;
+
+	private boolean glatt;
 	
 	/**
 	 * Der eine und einziege Konstruktor fuer Objekte der Klasse Raum.
@@ -95,6 +97,11 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	
 	public void farbeSetzen(Farbe farbe) {
 		this.farbe = farbe;
+	}
+	
+	public void farbeSetzen(String farbe)
+	{
+		farbeSetzen(Farbe.vonString(farbe));
 	}
 	
 	/**
@@ -805,6 +812,14 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 *            Hierbei soll zunaechst getestet werden, ob das Objekt innerhalb der Kamera liegt, und erst dann gezeichnet werden.
 	 */
 	public abstract void zeichnen(Canvas g, BoundingRechteck r);
+	
+	public boolean istGlatt() {
+		return glatt;
+	}
+
+	public void setzeGlatt(boolean glatt) {
+		this.glatt = glatt;
+	}
 	
 	/**
 	 * Prueft, ob ein bestimmter Punkt innerhalb des Raum-Objekts liegt.

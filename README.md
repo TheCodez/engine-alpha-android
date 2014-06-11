@@ -22,3 +22,51 @@ public class TestActivity extends GameActivity
 	}
 }
 ```
+
+##Fortgeschrittenes Beispiel
+```java
+import ea.*;
+import ea.android.GameActivity;
+import android.hardware.Sensor;
+import android.view.MotionEvent;
+
+public class Test extends GameActivity 
+{
+	private Rechteck box;
+	private float verschX;
+	
+    @Override
+    public void init() 
+    {
+        box = new Rechteck(180, 320, 120, 120);
+        box.farbeSetzen(Farbe.Gruen);
+
+        wurzel.add(box);
+    }
+    
+    @Override
+    public void tick()
+    {
+    	box.bewegen(new Vektor(verschX, 0));
+    }
+    
+    @Override
+    public void touchReagieren(float x, float y, MotionEvent event)
+	{
+		if(event.getAction() == MotionEvent.ACTION_DOWN)
+		{
+			box.sichtbarSetzen(false);
+		}
+		else if(event.getAction() == MotionEvent.ACTION_UP)
+		{
+			box.sichtbarSetzen(true);
+		}
+	}
+	
+    @Override
+	public void sensorReagieren(float x, float y, float z, Sensor sensor)
+	{
+		verschX = x;
+	}
+}
+```

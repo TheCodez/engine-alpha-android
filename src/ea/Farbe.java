@@ -2,7 +2,7 @@ package ea;
 
 import android.graphics.Color;
 
-public class Farbe 
+public final class Farbe 
 {
 	public int r, g, b, a;
 	
@@ -48,5 +48,52 @@ public class Farbe
 	public int alsInt()
 	{
 		return Color.rgb(r, g, b);
+	}
+	
+	public static Farbe vonString(String farbe)
+	{
+		final String f = farbe.toLowerCase();
+		
+		switch(f)
+		{
+			case "blau":
+				return Farbe.Blau;
+			case "rot":
+				return Farbe.Rot;
+			case "gruen":
+				return Farbe.Gruen;
+			case "weiss":
+				return Farbe.Weiss;
+			case "schwarz":
+				return Farbe.Schwarz;
+			case "orange":
+				return Farbe.Orange;
+			case "braun":
+				return Farbe.Braun;
+			case "rosa":
+				return Farbe.Rosa;
+			case "aquamarin":
+				return Farbe.Aquamarin;
+			default:
+				return Farbe.Weiss;
+		}
+	}
+	
+	/**
+	 * Gibt eine Farbe mit dem Halben Alpha-Wert dieser zurueck.
+	 * 
+	 * @return eine Farbe desselbe Farbtons wie diese, jedoch doppelt so durchsichtig wie diese.
+	 */
+	public Farbe halbesAlpha() {
+		return new Farbe(r, g, b, a / 2);
+	}
+
+	/**
+	 * Gibt an, ob diese Farbe ueberhaupt nicht durchsichtig ist.
+	 * 
+	 * @return <code>true</code>, wenn der Alpha-Wert der Farbe <b>nicht 255</b> ist, sonst automatisch <code>false</code>.
+	 */
+	public boolean undurchsichtig() {
+		return a == 255;
 	}
 }
