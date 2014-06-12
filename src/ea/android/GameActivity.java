@@ -15,6 +15,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 enum BildOrientation
@@ -29,6 +31,7 @@ enum BildOrientation
 */
 public abstract class GameActivity extends Activity implements Ticker, SensorEventListener
 {
+	protected static final String TAG = "GameActivity";
 	
 	public Knoten wurzel;
 		
@@ -45,6 +48,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	public int hoehe;
 	
 	public boolean tick;
+	private int intervall;
 
 	
 	private SensorManager sensorManager;
@@ -70,13 +74,13 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
-        
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         
         instanz = this; 
 		
 		manager = new Manager();
 		manager.anmelden(this, 10);
+		intervall = 10;
 		
 		init();
 	}
@@ -109,7 +113,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 	    super.onPause();
 	    sensorManager.unregisterListener(this);
-	    //manager.anhalten(this);
+	    if(manager != null)
+	    	manager.anhalten(this);
 	}
 		
 	@Override
@@ -117,11 +122,13 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 	    super.onResume();
 	    sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-	    //manager.starten(this, 20);
+	    if(manager != null)
+	    	manager.starten(this, intervall);
 	}
 	
 	public void tickerIntervallSetzen(int intervall)
 	{
+		this.intervall = intervall;
 		manager.abmelden(this);
 		manager.anmelden(this, intervall);
 	}
@@ -184,6 +191,16 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		
 	}
 	
+	public void tasteGedruecktReagieren(int code)
+	{
+		
+	}
+	
+	public void tasteLosgelassenReagieren(int code)
+	{
+		
+	}
+	
 	public Zeichner zeichnerGeben()
 	{
 		return zeichner;
@@ -198,7 +215,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	public int zufallsZahl(int obergrenze) 
 	{
 		if (obergrenze < 0) {
-			System.err.println("Achtung!! Fuer eine Zufallszahl muss die definierte Obergrenze (die inklusiv in der Ergebnismenge ist) eine nichtnegative Zahl sein!!");
+			Log.e(TAG, "Achtung!! Fuer eine Zufallszahl muss die definierte Obergrenze (die inklusiv in der Ergebnismenge ist) eine nichtnegative Zahl sein!!");
 		}
 		return zufall.nextInt(obergrenze + 1);
 	}
@@ -220,4 +237,19 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+	    tasteGedruecktReagieren(keyEventConvertieren(keyCode, event));
+
+	    return super.onKeyDown(keyCode, event);
+	}
+	
+	private int keyEventConvertieren(int key, KeyEvent event)
+	{
+		if (key == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+	        return Taste.Zurueck;
+	    }
+		
+		return Taste.Keine;
+	}
 }

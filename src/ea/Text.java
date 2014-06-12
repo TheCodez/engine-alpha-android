@@ -3,6 +3,7 @@ package ea;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.Rect;
 import ea.internal.collision.Collider;
 
 public class Text extends Raum
@@ -10,12 +11,16 @@ public class Text extends Raum
 	private boolean istUnterstrichen;
 	private float groesse;
 	private String text;
+	private Paint p;
+	
 	public Text(float x, float y, String text, float textGroesse)
 	{
 		super.position = new Punkt(x, y);
 		this.text = text;
 		groesse = textGroesse;
 		farbeSetzen(Farbe.Schwarz);
+		
+		p = new Paint();
 	}
 	
 	public Text(float x, float y, String text)
@@ -26,6 +31,11 @@ public class Text extends Raum
 	public Text(String text)
 	{
 		this(0, 0, text);
+	}
+	
+	public Text(float x, float y)
+	{
+		this(x, y, "Text");
 	}
 	
 	public boolean istUnterstrichen() {
@@ -48,7 +58,6 @@ public class Text extends Raum
 
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) {
-		Paint p = new Paint();
 		p.setUnderlineText(istUnterstrichen);
 		p.setTextSize(groesse);
 		p.setColor(farbe.alsInt());
@@ -61,8 +70,12 @@ public class Text extends Raum
 
 	@Override
 	public BoundingRechteck dimension() {
-		//TODO Textbreite und Hoehe
-		return new BoundingRechteck(position.x, position.y, (text.length() * groesse) / 2.5f , groesse);
+		Rect bounds = new Rect();
+		p.getTextBounds(text, 0, text.length(), bounds); 
+		int br = bounds.height(); 
+		int h = bounds.width();
+		
+		return new BoundingRechteck(position.x, position.y, br, h);
 	}
 
 	@Override

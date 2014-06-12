@@ -648,14 +648,37 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * Bei den ALLEN Objekten ist die eingegebene Position die links-oben liegende Ecke des die Figur
 	 * optimal umschreibenden zu den Fensterbegrenzungen parallelen Rechtecks.
 	 *
-	 * Das heißt, dass bei Kreisen zum Beispiel <b>nicht</b> die des Mittelpunktes
-	 * ist! Hierfür gibt es die Sondermethode <code>mittelpunktSetzen(int x, int y)</code>.
+	 * Das heisst, dass bei Kreisen zum Beispiel <b>nicht</b> die des Mittelpunktes
+	 * ist! Hierfuer gibt es die Sondermethode <code>mittelpunktSetzen(int x, int y)</code>.
 	 * 
 	 * @param p
 	 *            Der neue Zielpunkt
 	 * @see #positionSetzen(float, float)
 	 */
 	public void positionSetzen(Punkt p) {
+		BoundingRechteck r = dimension();
+		verschieben(new Vektor(p.x - r.x, p.y - r.y));
+	}
+	
+	/**
+	 * Setzt die Position des Objektes gänzlich neu auf der Zeichenebene.
+	 *
+	 * Hierbei wird die abstrakte Methode verschieben() und dimension() angewandt, um eine zur
+	 * vorherigen Position relative Verschiebung zu erreichen, die an die gewünschte Zielposition fährt.
+	 *
+	 * <b>ACHTUNG !!!</b>
+	 *
+	 * Bei den ALLEN Objekten ist die eingegebene Position die links-oben liegende Ecke des die Figur
+	 * optimal umschreibenden zu den Fensterbegrenzungen parallelen Rechtecks.
+	 *
+	 * Das heisst, dass bei Kreisen zum Beispiel <b>nicht</b> die des Mittelpunktes
+	 * ist! Hierfuer gibt es die Sondermethode <code>mittelpunktSetzen(int x, int y)</code>.
+	 * 
+	 * @param p
+	 *            Der neue Zielpunkt
+	 * @see #positionSetzen(float, float)
+	 */
+	public void setzePosition(Punkt p) {
 		BoundingRechteck r = dimension();
 		verschieben(new Vektor(p.x - r.x, p.y - r.y));
 	}
@@ -682,6 +705,31 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * @see #positionSetzen(Punkt)
 	 */
 	public void positionSetzen(float x, float y) {
+		this.positionSetzen(new Punkt(x, y));
+	}
+	
+	/**
+	 * Setzt die Position des Objektes gänzlich neu auf der Zeichenebene.
+	 *
+	 * Hierbei wird die abstrakte Methode verschieben() und dimension() angewandt, um eine zur
+	 * vorherigen Position relative Verschiebung zu erreichen, die an die gewünschte Zielposition fährt.
+	 *
+	 * <b>ACHTUNG !!!</b>
+	 *
+	 * Bei den ALLEN Objekten ist die eingegebene Position die links-oben liegende Ecke des die Figur
+	 * optimal umschreibenden zu den Fensterbegrenzungen parallelen Rechtecks.
+	 *
+	 * Das heißt, dass bei Kreisen zum Beispiel <b>nicht</b> die des Mittelpunktes
+	 * ist! Hierfür gibt es die Sondermethode <code>mittelpunktSetzen(int x, int y)</code>.
+	 *
+	 * @param x
+	 *            neue <code>x</code>-Koordinate
+	 * @param y
+	 *            neue <code>y</code>-Koordinate
+	 * @see #mittelpunktSetzen(int, int)
+	 * @see #positionSetzen(Punkt)
+	 */
+	public void setzePosition(float x, float y) {
 		this.positionSetzen(new Punkt(x, y));
 	}
 	
@@ -719,6 +767,84 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * @see #zentrum()
 	 */
 	public void mittelpunktSetzen(Punkt p) {
+		this.verschieben(this.zentrum().nach(p));
+	}
+	
+	/**
+	 * Verschiebt die Raum-Figur so, dass ihr Mittelpunkt die eingegebenen Koordinaten hat.
+	 *
+	 * Diese Methode arbeitet nach dem Mittelpunkt des das Objekt abdeckenden BoundingRechtecks
+	 * durch den Aufruf der Methode <code>zentrum()</code>. Daher ist diese Methode in der Anwendung
+	 * auf ein Knoten-Objekt nicht unbedingt sinnvoll.
+	 * 
+	 * @param x
+	 *            Die <code>x</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @param y
+	 *            Die <code>y</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @see #mittelpunktSetzen(Punkt)
+	 * @see #verschieben(Vektor)
+	 * @see #positionSetzen(float, float)
+	 * @see #zentrum()
+	 */
+	public void mittelpunktSetzen(float x, float y) {
+		this.mittelpunktSetzen(new Punkt(x, y));
+	}
+	
+	/**
+	 * Verschiebt die Raum-Figur so, dass ihr Mittelpunkt die eingegebenen Koordinaten hat.
+	 *
+	 * Diese Methode arbeitet nach dem Mittelpunkt des das Objekt abdeckenden BoundingRechtecks
+	 * durch den Aufruf der Methode <code>zentrum()</code>. Daher ist diese Methode in der Anwendung
+	 * auf ein Knoten-Objekt nicht unbedingt sinnvoll.
+	 * 
+	 * @param x
+	 *            Die <code>x</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @param y
+	 *            Die <code>y</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @see #mittelpunktSetzen(Punkt)
+	 * @see #verschieben(Vektor)
+	 * @see #positionSetzen(float, float)
+	 * @see #zentrum()
+	 */
+	public void setzeMittelpunkt(float x, float y) {
+		this.mittelpunktSetzen(new Punkt(x, y));
+	}
+	
+	/**
+	 * Verschiebt die Raum-Figur so, dass ihr Mittelpunkt die eingegebenen Koordinaten hat.
+	 *
+	 * Diese Methode arbeitet nach dem Mittelpunkt des das Objekt abdeckenden BoundingRechtecks
+	 * durch den Aufruf der Methode <code>zentrum()</code>. Daher ist diese Methode in der Anwendung
+	 * auf ein Knoten-Objekt nicht unbedingt sinnvoll.
+	 * 
+	 * @param x
+	 *            Die <code>x</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @param y
+	 *            Die <code>y</code>-Koordinate des neuen Mittelpunktes des Objektes
+	 * @see #mittelpunktSetzen(Punkt)
+	 * @see #verschieben(Vektor)
+	 * @see #positionSetzen(float, float)
+	 * @see #zentrum()
+	 */
+	public void setzeMittelpunkt(int x, int y) {
+		this.mittelpunktSetzen(new Punkt(x, y));
+	}
+	
+	
+	/**
+	 * Verschiebt die Raum-Figur so, dass ihr Mittelpunkt die eingegebenen Koordinaten hat.<br />
+	 * Diese Methode Arbeitet nach dem Mittelpunkt des das Objekt abdeckenden BoundingRechtecks durch den Aufruf
+	 * der Methode <code>zentrum()</code>. Daher ist diese Methode im Anwand auf ein Knoten-Objekt nicht unbedingt sinnvoll.<br />
+	 * Macht dasselbe wie <code>mittelPunktSetzen(p.x, p.y)</code>.
+	 * 
+	 * @param p
+	 *            Der neue Mittelpunkt des Raum-Objekts
+	 * @see #mittelpunktSetzen(int, int)
+	 * @see #verschieben(Vektor)
+	 * @see #positionSetzen(float, float)
+	 * @see #zentrum()
+	 */
+	public void setzeMittelpunkt(Punkt p) {
 		this.verschieben(this.zentrum().nach(p));
 	}
 	
@@ -791,6 +917,21 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * @see #verschieben(Vektor)
 	 */
 	public void verschieben(int dX, int dY) {
+		this.verschieben(new Vektor(dX, dY));
+	}
+	
+	/**
+	 * Verschiebt das Objekt.<br />
+	 * Hierbei wird nichts anderes gemacht, als <code>verschieben(new Vektor(dX, dY))</code> auszufuehren. Insofern ist diese Methode dafuer gut, sich nicht mit der Klasse Vektor
+	 * auseinandersetzen zu muessen.
+	 * 
+	 * @param dX
+	 *            Die Verschiebung in Richtung X
+	 * @param dY
+	 *            Die Verschiebung in Richtung Y
+	 * @see #verschieben(Vektor)
+	 */
+	public void verschieben(float dX, float dY) {
 		this.verschieben(new Vektor(dX, dY));
 	}
 	
@@ -960,11 +1101,11 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	}
 	
 	/**
-	 * Berechnet den Höhenunterschied zwischen dem Fuß des höheren und dem Kopf des tieferen Raum-Objekts.
+	 * Berechnet den Hoehenunterschied zwischen dem Fuss des hoeheren und dem Kopf des tieferen Raum-Objekts.
 	 * 
 	 * @param m
-	 *            Das Raum-Objekt, dessen Höhenunterschied zu diesem gefunden werden soll
-	 * @return Der <b>absolute (also niemals negative)</b> Unterschied in der Höhe zwiscchen den beiden Objekten. <b>Überlagern sie sich, so ist der Rückgabewert 0</b>!
+	 *            Das Raum-Objekt, dessen Hoehenunterschied zu diesem gefunden werden soll
+	 * @return Der <b>absolute (also niemals negative)</b> Unterschied in der Hoehe zwiscchen den beiden Objekten. <b>Überlagern sie sich, so ist der Rückgabewert 0</b>!
 	 */
 	public int hoehenUnterschied(Raum m) {
 		return (int) this.dimension().hoehenUnterschied(m.dimension());
@@ -985,7 +1126,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * Prüft, ob dieses Raum-Objekt in ener bestimmten festen Fläche ist.
 	 * 
 	 * @param r
-	 *            Die kritische Fläche, auf deren schneiden mit diesem Raum-Objekt getestet werden soll.
+	 *            Die kritische Flaeche, auf deren schneiden mit diesem Raum-Objekt getestet werden soll.
 	 * @return <code>true</code>, wenn dieses Raum-Objekt sich mit dem BoundingRechteck schneidet, sonst <code>false</code>.
 	 */
 	public boolean inFlaeche(BoundingRechteck r) {
@@ -1010,9 +1151,9 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	}
 	
 	/**
-	 * Gibt die aktuelle Drehung des Raumes in Grad zurück.
+	 * Gibt die aktuelle Drehung des Raumes in Grad zurueck.
 	 * 
-	 * @return Gibt die aktuelle Drehung des Raumes in Grad zurück.
+	 * @return Gibt die aktuelle Drehung des Raumes in Grad zurueck.
 	 */
 	public double gibDrehung() {
 		return drehung;
@@ -1029,8 +1170,8 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	}
 	
 	/**
-	 * Hilfsmethode für die Sortierung der Räume nach dem Z-Index.
-	 * <b><i>Diese Methode sollte nicht außerhalb der Engine verwendet werden.</i></b>
+	 * Hilfsmethode fuer die Sortierung der Raeume nach dem Z-Index.
+	 * <b><i>Diese Methode sollte nicht ausserhalb der Engine verwendet werden.</i></b>
 	 * 
 	 * @see #zIndex
 	 * @see #zIndex(int)

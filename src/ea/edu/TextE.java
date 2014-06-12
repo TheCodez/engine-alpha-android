@@ -13,6 +13,6 @@ public class TextE extends Text {
 	public TextE(String content) {
 		super(140, 100, content);
 		farbeSetzen("Gruen");
-        GameActivity.get().wurzel.add(this);
+		GameActivity.get().wurzel.add(this);
 	}
 }
