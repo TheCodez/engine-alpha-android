@@ -45,6 +45,19 @@ public final class Farbe
 		this.a = 255;
 	}
 	
+	/**
+	 * 
+	 * @param argb Die Farbe im Hexadezimalformat
+	 */
+	public Farbe(int argb)
+	{
+		
+		this.a = ((argb & -16777216) >> 0x18);      
+        this.r = ((argb & 0xff0000) >> 0x10);
+        this.g = ((argb & 0xff00) >> 8);
+        this.b = (argb & 0xff);
+	}
+	
 	public int alsInt()
 	{
 		return Color.rgb(r, g, b);
