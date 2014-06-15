@@ -39,10 +39,10 @@ public class Bild extends Raum {
 	
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) {
-		//if (r.schneidetBasic(this.dimension())) {     //Bug: Kei zeichnen nach geraetdrehung
+		if (r.schneidetBasic(this.dimension())) {
 			if(bmp != null)
 				g.drawBitmap(bmp, position.x - r.x, position.y - r.y, new Paint());
-		//}
+		}
 	}
 
 	@Override

@@ -90,6 +90,12 @@ public class Kamera {
 		bild = new BoundingRechteck(0, 0, sizeX, sizeY);
 	}
 	
+	public void reInit(int sizeX, int sizeY)
+	{
+		bild = new BoundingRechteck(0, 0, sizeX, sizeY);
+	}
+	
+	
 	/**
 	 * Setze einen Fokus der Kamera auf ein Objekt.<br />
 	 * Dieses Objekt ist ab dann im 'Zentrum' der Kamera.<br />

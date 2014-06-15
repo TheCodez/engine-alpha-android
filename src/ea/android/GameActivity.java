@@ -6,6 +6,7 @@ import ea.*;
 import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -15,11 +16,12 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-enum BildOrientation
+enum BildOrientierung
 {
 	Portrait,
 	Landschaft
@@ -34,6 +36,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	protected static final String TAG = "GameActivity";
 	
 	public Knoten wurzel;
+	public Knoten uiWurzel;
 		
 	private Zeichner zeichner;	
 	public Kamera cam;
@@ -50,10 +53,12 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	public boolean tick;
 	private int intervall;
 
+	private NotificationCompat.Builder benachrichtigung;
 	
 	private SensorManager sensorManager;
 	private Sensor sensor;
 	private Vibrator vibrator;
+	private NotificationManager notificationManager;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -68,19 +73,23 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		zeichner.init(breite, hoehe, cam);
 		
 		cam.wurzel().add(wurzel = new Knoten());
+		cam.wurzel().add(uiWurzel = new Knoten());
         
         setContentView(zeichner);   
         
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
+        
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        
         
         instanz = this; 
 		
+        intervall = 10;
 		manager = new Manager();
-		manager.anmelden(this, 10);
-		intervall = 10;
+		manager.anmelden(this, intervall);
 		
 		init();
 	}
@@ -94,6 +103,12 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		if(wurzel != null)
 			wurzel.leeren();
 		
+		if(uiWurzel != null)
+			uiWurzel.leeren();
+		
+		if(benachrichtigung != null)
+			notificationManager.cancel(001);
+		
 	}
 	
 	@Override
@@ -106,6 +121,9 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	    
 	    breite = alteHoehe;
 	    hoehe = alteBreite;
+	    
+	    cam.reInit(breite, hoehe);
+	    zeichner.reInit(breite, hoehe);
 	}
 	
 	@Override
@@ -162,13 +180,40 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		vibrator.vibrate(milliSekunden);
 	}
 	
-	
-	public void setzeOrientation(BildOrientation orientation)
+	public void benachrichtigungHinzufuegen(String titel, String inhalt)
 	{
-		if(orientation == BildOrientation.Landschaft)
+		benachrichtigung = null;
+		
+	    benachrichtigung = new NotificationCompat.Builder(this)
+	    .setContentTitle(titel)
+	    .setContentText(inhalt);
+	    
+	    notificationManager.notify(001, benachrichtigung.build());
+	}
+	
+	
+	public void setzeBildschirmOrientierung(BildOrientierung orientation)
+	{
+		if(orientation == BildOrientierung.Landschaft)
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		else
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+	}
+	
+	public void uiElementHinzufuegen(Raum m)
+	{
+		if(!uiWurzel.besitzt(m) && !wurzel.besitzt(m))
+		{
+			uiWurzel.add(m);
+		}
+	}
+	
+	public void raumHinzufuegen(Raum m)
+	{
+		if(!wurzel.besitzt(m) && !uiWurzel.besitzt(m))
+		{
+			wurzel.add(m);
+		}
 	}
 	
 	/**

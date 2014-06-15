@@ -68,6 +68,11 @@ public class Zeichner extends View
 		super(context);
 	}
 	
+	public void reInit(int sizeX, int sizeY)
+	{
+		groesse = new BoundingRechteck(0, 0, sizeX, sizeY);
+	}
+	
 	
 	/**
 	 * Konstruktor fuer Objekte der Klasse Zeichner
@@ -164,7 +169,7 @@ public class Zeichner extends View
 		
 		
 		// Testet ein touch event fuer Knöpfe
-		for(Raum b : ((GameActivity)getContext()).wurzel.alleElemente())
+		for(Raum b : ((GameActivity)getContext()).uiWurzel.alleElemente())
 		{
 			if(b instanceof Button)
 			{

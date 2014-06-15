@@ -2,6 +2,7 @@ package ea.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import ea.Bild;
 import ea.BoundingRechteck;
@@ -24,6 +25,7 @@ public class Button extends Raum
 	private Bild normalBild;
 	private Bild gedruecktBild;
 	
+	private boolean hatText;
 	private Text buttonText;
 	
 	public Button(float x, float y, ButtonDefinition bd)
@@ -34,10 +36,18 @@ public class Button extends Raum
 		{
 			normalBild = new Bild(x, y, bd.normal);
 			gedruecktBild = new Bild(x, y, bd.gedrueckt);
+			
+			if(bd.text != "")
+			{
+				buttonText = new Text(position.x, position.y, bd.text);
+				hatText = true;
+			}
+			
 		}
 		else
 		{
-			
+			Log.e(getClass().getName(), "Buttondefinition ist unvollstaendig");
+			buttonText.textSetzen("Button");
 		}
 		
 	}
@@ -75,6 +85,11 @@ public class Button extends Raum
 			else
 			{
 				g.drawBitmap(normalBild.bild(), position.x, position.y, p);
+			}
+			
+			if(hatText)
+			{
+				buttonText.zeichnen(g, r);
 			}
 			
 			//g.drawText(buttonText.textGeben(), position.x + (dimension().breite - buttonText.dimension().breite) / 2, position.y + 18, p );

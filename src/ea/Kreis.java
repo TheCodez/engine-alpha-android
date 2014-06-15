@@ -80,8 +80,8 @@ public class Kreis extends RegEck {
 		// Kreis muss nicht gedreht werden,
 		// aber es könnten hier in Zukunft noch andere wichtige Funktionen aufgerunfen werden
 	
-		//if (!r.schneidetBasic(this.dimension()))
-		//	return;
+		if (!r.schneidetBasic(this.dimension()))
+			return;
 		
 		Paint p = new Paint();
 		p.setColor(farbe.alsInt());
