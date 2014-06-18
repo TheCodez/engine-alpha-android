@@ -3,6 +3,7 @@ package ea;
 import java.util.ArrayList;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import ea.internal.collision.BoxCollider;
 import ea.internal.collision.Collider;
 import ea.internal.collision.ColliderGroup;
@@ -52,6 +53,8 @@ public class Sprite extends Raum
 		{
 			this.bilder[i] = new Bild(x, y, bilder[i]);
 		}
+		
+		sprites.add(this);
 	}
 	
 	public Sprite(String ...bilder)
@@ -82,7 +85,11 @@ public class Sprite extends Raum
 	}
 	
 	@Override
-	public void zeichnen(Canvas g, BoundingRechteck r) {
+	public void zeichnen(Canvas g, BoundingRechteck r) 
+	{
+		Paint p = new Paint();
+		
+		//g.drawBitmap(bilder[aktuelle].bild(), position.x, position.y, p);
 		bilder[aktuelle].zeichnen(g, r);
 
 	}

@@ -85,8 +85,22 @@ public final class Farbe
 				return Farbe.Braun;
 			case "rosa":
 				return Farbe.Rosa;
+			case "himmelblau":
+				return Farbe.HimmelBlau;
+			case "tomate":
+				return Farbe.Tomate;
+			case "weizen":
+				return Farbe.Weizen;
+			case "mokka":
+				return Farbe.Mokka;
 			case "aquamarin":
 				return Farbe.Aquamarin;
+			case "koenigsblau":
+				return Farbe.KoenigsBlau;
+			case "olive":
+				return Farbe.Olive;
+			case "gelbgruen":
+				return Farbe.GelbGruen;
 			default:
 				return Farbe.Weiss;
 		}

@@ -25,7 +25,7 @@ public class TestActivity extends GameActivity
 }
 ```
 
-##Fortgeschrittenes Beispiel
+##Komplexeres Beispiel
 ```java
 import ea.*;
 import ea.android.*;

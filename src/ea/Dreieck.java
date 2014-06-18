@@ -203,27 +203,14 @@ public class Dreieck extends Geometrie {
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) {
 
-		//if (!r.schneidetBasic(this.dimension())) {
-		//	return;
-		//}
-/*
-		int[] x = {
-			(int) this.x[0],
-			(int) this.x[1],
-			(int) this.x[2]
-		};
-
-		int[] y = {
-			(int) this.y[0],
-			(int) this.y[1],
-			(int) this.y[2]
-		};
+		if (!r.schneidetBasic(this.dimension())) {
+			return;
+		}
 
 		for (int i = 0; i < 3; i++) {
 			x[i] -= r.x;
 			y[i] -= r.y;
 		}
-*/
 
 		Paint p = new Paint();
 		p.setColor(farbe.alsInt());
