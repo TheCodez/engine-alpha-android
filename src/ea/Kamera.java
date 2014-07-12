@@ -87,12 +87,12 @@ public class Kamera {
 	public Kamera(int sizeX, int sizeY, Zeichenebene z)
 	{
 		ebene = z;
-		bild = new BoundingRechteck(0, 0, sizeX, sizeY);
+		bild = new BoundingRechteck(0, 0, sizeX + 48, sizeY + 48);
 	}
 	
 	public void reInit(int sizeX, int sizeY)
 	{
-		bild = new BoundingRechteck(0, 0, sizeX, sizeY);
+		bild = new BoundingRechteck(0, 0, sizeX + 48, sizeY + 48);
 	}
 	
 	

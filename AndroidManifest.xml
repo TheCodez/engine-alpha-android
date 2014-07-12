@@ -10,23 +10,4 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
-
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/logo"
-        android:label="Engine Alpha"
-        android:theme="@android:style/Theme.NoTitleBar" >
-        <activity
-            android:name="ea.test.TestActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Engine Alpha"
-            android:theme="@android:style/Theme.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
 </manifest>

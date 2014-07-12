@@ -39,7 +39,7 @@ public class Button extends Raum
 			
 			if(bd.text != "")
 			{
-				buttonText = new Text(position.x, position.y, bd.text);
+				buttonText = new Text(mittelPunkt().x - 82, mittelPunkt().y, bd.text, 82);
 				hatText = true;
 			}
 			
@@ -47,27 +47,30 @@ public class Button extends Raum
 		else
 		{
 			Log.e(getClass().getName(), "Buttondefinition ist unvollstaendig");
-			buttonText.textSetzen("Button");
 		}
 		
 	}
 	
 	public void touch(float x, float y, MotionEvent event)
 	{
-	    switch (event.getAction()) 
-	    {
-	    	case MotionEvent.ACTION_DOWN:
-	    		if(this.dimension().istIn(new Punkt(x, y)))
-	    		{
-	    			istGedrueckt = true;
-	    			if(b != null)
-	    				b.knopfGedrueckt();
-	    		}
-	    		break;
-	    	case MotionEvent.ACTION_UP:
-	    		istGedrueckt = false;
-	    		break;
-	    }
+		if(sichtbar())
+		{
+		
+		    switch (event.getAction()) 
+		    {
+		    	case MotionEvent.ACTION_DOWN:
+		    		if(this.dimension().istIn(new Punkt(x, y)))
+		    		{
+		    			istGedrueckt = true;
+		    			if(b != null)
+		    				b.knopfGedrueckt(this);
+		    		}
+		    		break;
+		    	case MotionEvent.ACTION_UP:
+		    		istGedrueckt = false;
+		    		break;
+		    }
+		}
 	}
 	
 	@Override
@@ -87,8 +90,12 @@ public class Button extends Raum
 				g.drawBitmap(normalBild.bild(), position.x, position.y, p);
 			}
 			
+			Paint pt = new Paint();
+			pt.setTextSize(buttonText.groesseGeben());
+			
 			if(hatText)
 			{
+				//g.drawText(buttonText.textGeben(), mittelPunkt().x + (dimension().breite - buttonText.dimension().breite) / 2, mittelPunkt().y + 18, pt );
 				buttonText.zeichnen(g, r);
 			}
 			

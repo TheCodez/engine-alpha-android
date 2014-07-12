@@ -2,5 +2,5 @@ package ea.ui;
 
 public interface ButtonAktion 
 {
-	public void knopfGedrueckt();
+	public void knopfGedrueckt(Button sender);
 }

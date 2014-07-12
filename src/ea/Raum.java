@@ -942,9 +942,10 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 *            Das Objekt, das auf Kollision mit diesem getestet werden soll.
 	 * @return TRUE, wenn sich beide Objekte schneiden.
 	 */
-	//public final boolean schneidet(Raum r) {
+     //public final boolean schneidet(Raum r) {
 	//	return this.aktuellerCollider().verursachtCollision(position, r.position, r.aktuellerCollider());
-	//}
+	 //}
+	
 	
 	public final boolean schneidet(Raum r) {
 		
@@ -952,6 +953,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 			return true;
 		return false; 
 	}
+	
 	
 	/**
 	 * Zeichnet das Objekt.

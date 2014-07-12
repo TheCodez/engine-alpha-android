@@ -26,14 +26,10 @@ enum BildOrientierung
 	Portrait,
 	Landschaft
 }
-
-/*
- * TODO GameActivity soll abstract werden und als Basic Klasse fuer jedes Spiel gelten
- * 
-*/
+	
 public abstract class GameActivity extends Activity implements Ticker, SensorEventListener
 {
-	protected static final String TAG = "GameActivity";
+	private static final String TAG = "GameActivity";
 	
 	public Knoten wurzel;
 	public Knoten uiWurzel;
@@ -52,13 +48,10 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	
 	public boolean tick;
 	private int intervall;
-
-	private NotificationCompat.Builder benachrichtigung;
 	
 	private SensorManager sensorManager;
 	private Sensor sensor;
 	private Vibrator vibrator;
-	private NotificationManager notificationManager;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -81,9 +74,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
         
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        
         
         instanz = this; 
 		
@@ -98,7 +89,6 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	@Override
 	protected void onDestroy()
 	{
-		super.onDestroy();
 		
 		if(wurzel != null)
 			wurzel.leeren();
@@ -106,9 +96,11 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		if(uiWurzel != null)
 			uiWurzel.leeren();
 		
-		if(benachrichtigung != null)
-			notificationManager.cancel(001);
+		if(vibrator != null)
+			vibrator.cancel();
 		
+		super.onDestroy();
+		System.exit(0);
 	}
 	
 	@Override
@@ -131,8 +123,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 	    super.onPause();
 	    sensorManager.unregisterListener(this);
-	    if(manager != null)
-	    	manager.anhalten(this);
+	    //if(manager != null)
+	    //	manager.anhalten(this);
 	}
 		
 	@Override
@@ -140,8 +132,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 	    super.onResume();
 	    sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-	    if(manager != null)
-	    	manager.starten(this, intervall);
+	   // if(manager != null)
+	    	//manager.starten(this, intervall);
 	}
 	
 	public void tickerIntervallSetzen(int intervall)
@@ -158,9 +150,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 
 	public static GameActivity get()
 	{
-		if(instanz != null)
-			return instanz;
-		return null;
+		return instanz;
 	}
 	
 	public void titelSetzen(String titel)
@@ -179,19 +169,7 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	{
 		vibrator.vibrate(milliSekunden);
 	}
-	
-	public void benachrichtigungHinzufuegen(String titel, String inhalt)
-	{
-		benachrichtigung = null;
 		
-	    benachrichtigung = new NotificationCompat.Builder(this)
-	    .setContentTitle(titel)
-	    .setContentText(inhalt);
-	    
-	    notificationManager.notify(001, benachrichtigung.build());
-	}
-	
-	
 	public void setzeBildschirmOrientierung(BildOrientierung orientation)
 	{
 		if(orientation == BildOrientierung.Landschaft)

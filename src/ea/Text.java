@@ -21,11 +21,13 @@ public class Text extends Raum
 		farbeSetzen(Farbe.Schwarz);
 		
 		p = new Paint();
+		
+		setzeGlatt(true);
 	}
 	
 	public Text(float x, float y, String text)
 	{
-		this(x, y, text, 24);
+		this(x, y, text, 32);
 	}
 	
 	public Text(String text)
