@@ -2,11 +2,7 @@ package ea.android;
 
 import java.util.Random;
 
-import ea.*;
-import ea.internal.gra.Zeichenebene;
-import ea.internal.gra.Zeichner;
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -16,10 +12,17 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.widget.Toast;
+import ea.Farbe;
+import ea.Kamera;
+import ea.Knoten;
+import ea.Manager;
+import ea.Raum;
+import ea.Ticker;
+import ea.internal.gra.Zeichenebene;
+import ea.internal.gra.Zeichner;
 
 enum BildOrientierung
 {
@@ -148,6 +151,18 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 		manager.anhalten(this);
 	}
 
+	public void nachrichtAnzeigen(final String text, final int dauer)
+	{
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Toast.makeText(GameActivity.this, text, dauer).show();
+				
+			}
+		});
+	}
+	
 	public static GameActivity get()
 	{
 		return instanz;

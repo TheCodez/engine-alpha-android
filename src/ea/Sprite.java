@@ -2,8 +2,11 @@ package ea;
 
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import ea.internal.collision.BoxCollider;
 import ea.internal.collision.Collider;
 import ea.internal.collision.ColliderGroup;
@@ -16,6 +19,21 @@ public class Sprite extends Raum
 	private Bild[] bilder;
 	
 	private boolean animiert = true;
+	
+	private boolean spiegelX;
+	private boolean spiegelY;
+	
+	private boolean istSpriteSheet;
+	private Bild spriteSheet;
+	
+	private int spriteBreite;
+	private int spriteHoehe;
+	private int zeilen, spalten;
+	private int aktuellesFrame;
+	private long frameTicker;
+	private int framePeriode;
+	private Rect sourceRect;
+	private int anzahlBilder;
 	
 	static 
 	{
@@ -48,6 +66,7 @@ public class Sprite extends Raum
 		this.bilder = new Bild[bilder.length];
 		
 		animiert = bilder.length > 1;
+		istSpriteSheet = false;
 		
 		for(int i = 0; i < bilder.length; i++)
 		{
@@ -62,6 +81,25 @@ public class Sprite extends Raum
 		this(0, 0, bilder);
 	}
 
+	public Sprite(String spriteSheet, float x, float y, int fps, int anzahlBilder)
+	{
+		super.position = new Punkt(x, y);
+		
+		istSpriteSheet = true;
+		this.spriteSheet = new Bild(x, y, spriteSheet);
+		
+		this.anzahlBilder = anzahlBilder;
+		spriteBreite = this.spriteSheet.bild().getWidth() / anzahlBilder;
+		spriteHoehe = this.spriteSheet.bild().getHeight();
+		sourceRect = new Rect(0, 0, spriteBreite, spriteHoehe);
+		framePeriode = 1000 / fps;
+		frameTicker = 0l;
+		
+		animiert = true;
+		
+		sprites.add(this);
+	}
+	
 	public boolean animiert()
 	{
 		return animiert;
@@ -69,13 +107,30 @@ public class Sprite extends Raum
 	
 	public void animationsSchritt(int runde)
 	{
-		if (runde % intervall  != 0) {
+		if(!istSpriteSheet)
+		{
+			if (runde % intervall  != 0) {
 			return;
+			}
+			if (aktuelle == bilder.length - 1) {
+				aktuelle = 0;
+			} else {
+				aktuelle++;
+			}
 		}
-		if (aktuelle == bilder.length - 1) {
-			aktuelle = 0;
-		} else {
-			aktuelle++;
+		else
+		{
+			if (System.currentTimeMillis() > frameTicker + framePeriode) 
+			{
+				frameTicker = System.currentTimeMillis();
+				aktuellesFrame++;
+				if (aktuellesFrame >= anzahlBilder) {
+					aktuellesFrame = 0;
+				}
+			}
+			
+			this.sourceRect.left = aktuellesFrame * spriteBreite;
+			this.sourceRect.right = this.sourceRect.left + spriteBreite;
 		}
 	}
 	
@@ -87,11 +142,49 @@ public class Sprite extends Raum
 	@Override
 	public void zeichnen(Canvas g, BoundingRechteck r) 
 	{
-		Paint p = new Paint();
+	
+		if(!istSpriteSheet)
+		{
+			Matrix m = new Matrix();
+			Paint p = new Paint();
+			Bitmap bild = bilder[aktuelle].bild();
+			
+			if(spiegelX && spiegelY) {
+				m.preScale(-1, -1);
+			} else if(spiegelX) {
+				m.preScale(-1, 1);
+			} else if(spiegelY) {
+				m.preScale(1, -1);
+			} else {
+				m.preScale(1, 1);
+			}
+		    
+			Bitmap endBild = Bitmap.createBitmap(bild, 0, 0, bild.getWidth(), bild.getHeight(), m, false);
+		    
+			g.drawBitmap(endBild, position.x, position.y, p);
+		}
 		
-		//g.drawBitmap(bilder[aktuelle].bild(), position.x, position.y, p);
-		bilder[aktuelle].zeichnen(g, r);
-
+		else
+		{
+			Rect destRect = new Rect(position.x(), position.y(), position.x() + spriteBreite, position.y() + spriteHoehe);
+			
+			Matrix m = new Matrix();
+			Paint p = new Paint();
+			
+			if(spiegelX && spiegelY) {
+				m.preScale(-1, -1);
+			} else if(spiegelX) {
+				m.preScale(-1, 1);
+			} else if(spiegelY) {
+				m.preScale(1, -1);
+			} else {
+				m.preScale(1, 1);
+			}
+		    
+			Bitmap endBild = Bitmap.createBitmap(spriteSheet.bild(), 0, 0, spriteSheet.bild().getWidth(), spriteSheet.bild().getHeight(), m, false);
+			
+			g.drawBitmap(endBild, sourceRect, destRect, null);
+		}
 	}
 
 	@Override
@@ -110,5 +203,20 @@ public class Sprite extends Raum
 			gc.addCollider(BoxCollider.fromBoundingRechteck(new Vektor(r.x, r.y), r));
 		}
 		return gc;
+	}
+	
+	public void setzeSpiegelX(boolean s)
+	{
+		spiegelX = s;
+	}
+	
+	public void setzeSpiegelY(boolean s)
+	{
+		spiegelY = s;
+	}
+	
+	public int aktuellesFrameGeben()
+	{
+		return aktuellesFrame;
 	}
 }
