@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -56,6 +57,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
 	private Sensor sensor;
 	private Vibrator vibrator;
 	
+	public MediaPlayer mediaPlayer;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -78,6 +81,8 @@ public abstract class GameActivity extends Activity implements Ticker, SensorEve
         sensorManager.registerListener(this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
         
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);        
+        
+        mediaPlayer = new MediaPlayer();
         
         instanz = this; 
 		
