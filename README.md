@@ -71,3 +71,27 @@ public class TestActivity extends GameActivity
 	}
 }
 ```
+
+## Grundlegendes Beispiel für die Verwendung von Szenen
+```java
+import ea.*;
+import ea.android.GameSzenenActivity;
+
+public class TestActivity extends GameSzenenActivity
+{
+	private Rechteck box;
+	
+	@Override
+	public Szene init() 
+	{
+		Szene szene = new Szene();
+		
+		box = new Rechteck(180, 320, 120, 120);
+        box.farbeSetzen(Farbe.Gruen);
+		
+        szene.hinzufuegen(box);
+        
+        return szene;
+	}
+}
+```
