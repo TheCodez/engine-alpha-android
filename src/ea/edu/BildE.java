@@ -20,10 +20,19 @@ public class BildE extends Bild {
 		super(x, y, pfad);
 
 		if(GameInstanz.get() instanceof GameActivity)
+		{
 			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+		}
 		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
+		{
 			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
+		}	
 		else
-			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+		{
+			if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() != null)
+			{
+				((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+			}	
+		}
 	}
 }

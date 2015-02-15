@@ -71,6 +71,11 @@ public abstract class GameSzenenActivity extends BasisActivity implements Ticker
 		
 		aktuelleSzene = init();
 		
+		if(aktuelleSzene == null)
+		{
+			aktuelleSzene = new Szene();
+		}
+		
 		cam.wurzel().add(aktuelleSzene.wurzel);
 		
 		
