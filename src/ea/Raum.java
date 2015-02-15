@@ -42,6 +42,8 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	
 	protected Farbe farbe = Farbe.Weiss;
 	
+	private Szene szene;
+	
 	/**
 	 * Die absolute Position des Raum-Objekts. Die Interpretation dieses Parameters
 	 * hängt von den sich <b>ableitenden</b> Klassen ab.
@@ -112,6 +114,16 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	public void setzeFarbe(Farbe farbe)
 	{
 		farbeSetzen(farbe);
+	}
+	
+	public void setzeSzene(Szene szene)
+	{
+		this.szene = szene;
+	}
+	
+	public void ausSzeneLoeschen()
+	{
+		szene.entfernen(this);
 	}
 	
 	/**

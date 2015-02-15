@@ -21,26 +21,20 @@ import ea.Kamera;
 import ea.Knoten;
 import ea.Manager;
 import ea.Raum;
+import ea.Szene;
 import ea.Ticker;
 import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
 
-enum BildOrientierung
+public abstract class GameSzenenActivity extends BasisActivity implements Ticker, SensorEventListener
 {
-	Portrait,
-	Landschaft
-}
+	private static final String TAG = GameSzenenActivity.class.getSimpleName();
 	
-public abstract class GameActivity extends BasisActivity implements Ticker, SensorEventListener
-{
-	private static final long serialVersionUID = -4408577037715253942L;
-
-	private static final String TAG = GameActivity.class.getSimpleName();
+	private Szene aktuelleSzene;
 	
 	public Knoten wurzel;
-	public Knoten uiWurzel;
-		
-	private static GameActivity instanz;
+	
+	private static GameSzenenActivity instanz;
 	
 	public int breite;
 	public int hoehe;
@@ -58,11 +52,6 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
         cam = new Kamera(breite, hoehe, new Zeichenebene());
 		zeichner = new Zeichner(this);
 		zeichner.init(breite, hoehe, cam);
-		
-		cam.wurzel().add(wurzel = new Knoten());
-		cam.wurzel().add(uiWurzel = new Knoten());
-        
-        setContentView(zeichner);   
         
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -72,13 +61,28 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
         
         mediaPlayer = new MediaPlayer();
         
+        wurzel = new Knoten();
+        
         instanz = this; 
 		
         intervall = 10;
 		manager = new Manager();
 		manager.anmelden(this, intervall);
 		
-		init();
+		aktuelleSzene = init();
+		
+		cam.wurzel().add(aktuelleSzene.wurzel);
+		
+		
+		//@todo wurzel von GameSzenenActvity entfernen
+		for(Raum r : wurzel.alleElemente())
+		{
+			if(r != null)
+				aktuelleSzene.hinzufuegen(r);
+			wurzel.leeren();
+		}
+		
+		setContentView(zeichner);
 	}
 
 	
@@ -140,7 +144,7 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
 			
 			@Override
 			public void run() {
-				Toast.makeText(GameActivity.this, text, Toast.LENGTH_LONG).show();
+				Toast.makeText(GameSzenenActivity.this, text, Toast.LENGTH_LONG).show();
 				
 			}
 		});
@@ -152,13 +156,28 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
 			
 			@Override
 			public void run() {
-				Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
+				Toast.makeText(GameSzenenActivity.this, text, Toast.LENGTH_SHORT).show();
 				
 			}
 		});
 	}
 	
-	public static GameActivity get()
+	public void setzeSzene(Szene szene)
+	{
+		if(szene != null)
+		{
+			cam.wurzel().leeren();
+			aktuelleSzene = szene;
+			cam.wurzel().add(aktuelleSzene.wurzel);
+		}	
+	}
+	
+	public Szene szeneGeben()
+	{
+		return aktuelleSzene;
+	}
+	
+	public static GameSzenenActivity get()
 	{
 		return instanz;
 	}
@@ -188,50 +207,49 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 	
-	public void uiElementHinzufuegen(Raum m)
-	{
-		if(!uiWurzel.besitzt(m) && !wurzel.besitzt(m))
-		{
-			uiWurzel.add(m);
-		}
-	}
-	
-	public void raumHinzufuegen(Raum m)
-	{
-		if(!wurzel.besitzt(m) && !uiWurzel.besitzt(m))
-		{
-			wurzel.add(m);
-		}
-	}
-	
 	/**
 	 *  Diese Methode muss in unterklassen ueberschrieben werden
 	 */
-	public abstract void init();
+	public abstract Szene init();
 	
     public void tick()
     {
-    	
+    	if(aktuelleSzene != null)
+    	{
+    		aktuelleSzene.tick();
+    	}
     }
 	
 	public void touchReagieren(float x, float y, TouchEvent event)
 	{
-		
+		if(aktuelleSzene != null)
+		{
+			aktuelleSzene.touchReagieren(x, y, event);
+		}
 	}
 	
 	public void sensorReagieren(float x, float y, float z, Sensor sensor)
 	{
-		
+		if(aktuelleSzene != null)
+		{
+			aktuelleSzene.sensorReagieren(x, y, z, sensor);
+		}
 	}
 	
 	public void tasteGedruecktReagieren(int code)
 	{
-		
+		if(aktuelleSzene != null)
+		{
+			aktuelleSzene.tasteGedruecktReagieren(code);
+		}
 	}
 	
 	public void tasteLosgelassenReagieren(int code)
 	{
-		
+		if(aktuelleSzene != null)
+		{
+			aktuelleSzene.tasteLosgelassenReagieren(code);
+		}
 	}
 	
 	public Zeichner zeichnerGeben()
@@ -272,12 +290,12 @@ public abstract class GameActivity extends BasisActivity implements Ticker, Sens
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
-	    tasteGedruecktReagieren(keyEventConvertieren(keyCode, event));
+	    tasteGedruecktReagieren(keyEventKonvertieren(keyCode, event));
 
 	    return super.onKeyDown(keyCode, event);
 	}
 	
-	private int keyEventConvertieren(int key, KeyEvent event)
+	private int keyEventKonvertieren(int key, KeyEvent event)
 	{
 		if (key == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 	        return Taste.Zurueck;

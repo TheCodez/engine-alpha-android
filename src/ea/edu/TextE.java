@@ -2,7 +2,10 @@ package ea.edu;
 
 import ea.*;
 import ea.android.GameActivity;
+import ea.android.GameInstanz;
+import ea.android.GameSzenenActivity;
 
+@Deprecated
 public class TextE extends Text {
 
 	/**
@@ -13,6 +16,12 @@ public class TextE extends Text {
 	public TextE(String content) {
 		super(140, 100, content);
 		farbeSetzen("Gruen");
-		GameActivity.get().wurzel.add(this);
+		
+		if(GameInstanz.get() instanceof GameActivity)
+			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
+			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
+		else
+			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
 	}
 }

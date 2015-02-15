@@ -21,6 +21,7 @@ package ea.internal.gra;
 
 import ea.*;
 import ea.android.GameActivity;
+import ea.android.GameSzenenActivity;
 import ea.android.TouchEvent;
 import ea.ui.Button;
 import android.content.Context;
@@ -164,18 +165,36 @@ public class Zeichner extends View
 	{
 		super.onTouchEvent(event);
 		
-		//((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), event);
-		((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
 		
-		
-		// Testet ein touch event fuer Knöpfe
-		for(Raum b : ((GameActivity)getContext()).uiWurzel.alleElemente())
+		if(getContext() instanceof GameActivity)
 		{
-			if(b instanceof Button)
+			((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
+			
+			// Testet ein touch event fuer Knöpfe
+			for(Raum b : ((GameActivity)getContext()).uiWurzel.alleElemente())
 			{
-				((Button)b).touch(event.getX(), event.getY(), event);
+				if(b instanceof Button)
+				{
+					((Button)b).touch(event.getX(), event.getY(), event);
+				}
 			}
 		}
+		else if(getContext() instanceof GameSzenenActivity)
+		{
+			((GameSzenenActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
+			
+			// Testet ein touch event fuer Knöpfe
+			for(Raum b : ((GameSzenenActivity)getContext()).szeneGeben().wurzel.alleElemente())
+			{
+				if(b instanceof Button)
+				{
+					((Button)b).touch(event.getX(), event.getY(), event);
+				}
+			}
+		}
+		
+		
+		
 		
 		return true;
 	}

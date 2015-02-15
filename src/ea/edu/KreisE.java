@@ -21,12 +21,15 @@ package ea.edu;
 
 import ea.Kreis;
 import ea.android.GameActivity;
+import ea.android.GameInstanz;
+import ea.android.GameSzenenActivity;
 
 /**
  * Ein einfacher "edu"-Dummie-Kreis.
  * 
  * @author Michael Andonie
  */
+@Deprecated
 public class KreisE extends Kreis {
 	private static final long serialVersionUID = 4781036275816114585L;
 
@@ -37,6 +40,12 @@ public class KreisE extends Kreis {
 	public KreisE() {
 		super(300, 200, 100);
 		farbeSetzen("Blau");
-		GameActivity.get().wurzel.add(this);
+
+		if(GameInstanz.get() instanceof GameActivity)
+			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
+			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
+		else
+			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
 	}
 }

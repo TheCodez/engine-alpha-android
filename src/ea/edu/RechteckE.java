@@ -21,12 +21,15 @@ package ea.edu;
 
 import ea.Rechteck;
 import ea.android.GameActivity;
+import ea.android.GameInstanz;
+import ea.android.GameSzenenActivity;
 
 /**
  * Ein einfaches "edu"-Dummmie-Rechteck.
  * 
  * @author Michael Andonie
  */
+@Deprecated
 public class RechteckE extends Rechteck {
 	private static final long serialVersionUID = -3793677493595048830L;
 
@@ -37,6 +40,12 @@ public class RechteckE extends Rechteck {
 	public RechteckE() {
 		super(50, 200, 200, 130);
 		farbeSetzen("Rot");
-		GameActivity.get().wurzel.add(this);
+		
+		if(GameInstanz.get() instanceof GameActivity)
+			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
+			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
+		else
+			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
 	}
 }

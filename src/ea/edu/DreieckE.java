@@ -22,12 +22,15 @@ package ea.edu;
 import ea.Dreieck;
 import ea.Punkt;
 import ea.android.GameActivity;
+import ea.android.GameInstanz;
+import ea.android.GameSzenenActivity;
 
 /**
  * Das einfache Dummie-Dreieck. Kann nur in seiner Position veraendert werden.
  * 
  * @author Michael Andonie
  */
+@Deprecated
 public class DreieckE extends Dreieck {
 	private static final long serialVersionUID = -4344073097243828398L;
 
@@ -38,7 +41,13 @@ public class DreieckE extends Dreieck {
 	public DreieckE() {
 		super(new Punkt(100, 100), new Punkt(200, 100), new Punkt(150, 50));
 		farbeSetzen("Gruen");
-		GameActivity.get().wurzel.add(this);
+		
+		if(GameInstanz.get() instanceof GameActivity)
+			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
+			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
+		else
+			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
 	}
 
 	/**
