@@ -1,11 +1,11 @@
-##Engine-Alpha Android
+## Engine-Alpha Android
 Eine auf Android geportete Engine-Alpha
 
-##Verwendung:
+## Verwendung:
 1. Die [engine-alpha-android.jar](https://github.com/skatermichi/engine-alpha-android/releases/download/0.9/engine-alpha-android.jar) hier, oder im Release Tab herunterladen.
 2. Danach die engine-alpha-android.jar in den "libs" Ordner des Projekts kopieren.
 
-##Grundlegendes Beispiel
+## Grundlegendes Beispiel
 ```java
 import ea.*;
 import ea.android.GameActivity;
@@ -25,7 +25,7 @@ public class TestActivity extends GameActivity
 }
 ```
 
-##Komplexeres Beispiel
+## Komplexeres Beispiel
 ```java
 import ea.*;
 import ea.android.*;
