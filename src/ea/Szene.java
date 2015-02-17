@@ -77,5 +77,10 @@ public class Szene extends Raum
 	{
 		return erzeugeLazyCollider();
 	}
+	
+	public GameSzenenActivity game()
+	{
+		return game;
+	}
 
 }
