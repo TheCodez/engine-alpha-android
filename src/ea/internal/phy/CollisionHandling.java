@@ -142,7 +142,7 @@ public class CollisionHandling {
 			Punkt zmov = beeinflussbar.ziel().zentrum();
 			BoundingRechteck bounds = unbeeinflussbar.ziel().dimension();
 			
-			Vektor vneu = beeinflussbar.getVelocity();
+			Vektor vneu = beeinflussbar.getVelocity().multiplizieren(unbeeinflussbar.getElastizitaet());
 			
 			if(zmov.realX() <= bounds.x + bounds.breite/2) {
 				//Aktiv LINKS von Passiv

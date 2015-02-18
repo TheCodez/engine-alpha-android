@@ -31,11 +31,27 @@ public class MechanikClient
 extends PhysikClient
 implements Ticker {
 	
+		/**
+		 * Die Grenze d, ab der Vektoren v mit |v|<d auf 0 abgerundet werden.
+		 */
+		private static float THRESHOLD = 0.00001f;
+	
+		/**
+		 * Setzt einen neuen Threshold d. Ein Objekt, dass sich mit |v| < d bewegt,
+		 * wird angehalten (die Engine sorgt also manuell für v' = 0)
+		 * @param threshold	Der Threshold d (in px), ab dem die Engine Geschwindigkeitsvektoren
+		 * 					auf 0 setzt.
+		 */
+		public static void tresholdSetzen(float threshold) {
+			THRESHOLD = threshold;
+		}
+	
 	/**
 	 * Diese Konstante gibt an, wie viele Meter ein Pixel hat. Das ist
 	 * normalerweise ein sehr <b>kleiner</b> Wert (Standard: 0.01f).
 	 */
 	private static float METER_PRO_PIXEL = 0.001f;
+	
 	
 	/**
 	 * Setzt, wie viele Meter auf einen Pixel im Spielfenster gehen.
@@ -55,6 +71,14 @@ implements Ticker {
 		}
 		METER_PRO_PIXEL = meterpropixel;
 	}
+	
+	/**
+	 * Gibt an, wie viel Energie beim Aufprall gegen dieses Objekt (als nicht beeinflussbares Objekt)
+	 * erhalten bleibt.
+	 * 1 ~= 100%
+	 * 0 ~=   0%
+	 */
+	private float elastizitaet = 0.34f;
 	
 	/**
 	 * Der Timer, der sich aller Mechanik-Clients annimmt.
@@ -386,7 +410,7 @@ implements Ticker {
 		
 		//GenÃ¼gend fÃ¼r Ende? -> Heuristik: |v| < d [mit d geschickt gewÃ¤hlt]
 		Vektor dif = velocity.differenz(lastVelocity);
-		if(dif.laenge() < 0.0001f && dif.laenge() != 0) {
+		if (dif.manhattanLength() < THRESHOLD && dif.manhattanLength() != 0) {
 			System.out.println("T");
 			velocity = Vektor.NULLVEKTOR;
 		}
@@ -403,4 +427,23 @@ implements Ticker {
 		return collider;
 	}
 	
+	/**
+	 * @return Die Elastizitaet des Objekts.
+	 */
+	public float getElastizitaet() {
+		return elastizitaet;
+	}
+	 /**
+	 * Setzt die Elastizität für dieses Objekt neu. Hat nur einen Effekt, wenn 
+	 * dieses Objekt nicht beeinflussbar ist.
+	 * @param elastizitaet Die Elastizität dieses Objekts in %. 1 = Voller Energieerhalt
+	 *  					 --- 0 = Voller Energieverlust
+	 */
+	public void setElastizitaet(float elastizitaet) {
+		if(elastizitaet < 0) {
+			//Logger.error("Die Elastizität eines Objekts kann nicht negativ sein. Die Eingabe war " + elastizitaet + " .");
+			return;
+		}
+		this.elastizitaet = elastizitaet;
+	}
 }

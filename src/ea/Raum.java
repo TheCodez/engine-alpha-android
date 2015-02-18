@@ -526,7 +526,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * <br /><code>
 	 * Kreis ball = ...<br />
 	 * [...] <br />
-	 * ball.kraftSetzen(new Vektor(0,9.81)); // Setze eine Schwerkraft mit 9,81 kg * m/s^2
+	 * ball.konstanteKraftSetzen(new Vektor(0,9.81)); // Setze eine Schwerkraft mit 9,81 kg * m/s^2
 	 * </code>
 	 * 
 	 * @param kraft die Kraft, die auf dieses <code>Raum</code>-Objekt konstant wirken soll.
@@ -535,7 +535,7 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	 * @see #getForce()
 	 * @see #newtonschMachen()
 	 */
-	public void kraftSetzen(Vektor kraft) {
+	public void konstanteKraftSetzen(Vektor kraft) {
 		phClient.kraftSetzen(kraft);
 	}
 
@@ -960,10 +960,33 @@ public abstract class Raum implements java.io.Serializable, Comparable<Raum> {
 	
 	
 	public final boolean schneidet(Raum r) {
-		
-		if(this.dimension().schneidetBasic(r.dimension()))
-			return true;
-		return false; 
+		if(this instanceof Knoten) {
+            Knoten k = (Knoten) this;
+            for(Raum m : k.alleElemente()) {
+                if(r.schneidet(m))
+                    return true;
+            }
+        } 
+		else if (r instanceof Knoten) {
+            Knoten k = (Knoten) r;
+            for(Raum m : k.alleElemente()) {
+                if(this.schneidet(m))
+                    return true;
+            }
+        } 
+		else if (this instanceof Kreis) {
+            if(r instanceof Kreis) {
+                float x = r.mittelPunkt().abstand(this.mittelPunkt());
+                return x <= ((Kreis)this).radius() + ((Kreis)r).radius();
+            } 
+            else {
+                return this.dimension().schneidetBasic(r.dimension());
+            }
+        } 
+		else {
+            return this.dimension().schneidetBasic(r.dimension());
+        }
+		return false;
 	}
 	
 	

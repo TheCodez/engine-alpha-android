@@ -425,4 +425,14 @@ implements Cloneable {
 	public Vektor clone() {
 		return new Vektor(x,y);
 	}
+	
+	/**
+	 * Gibt die Manhattan-Länge des Vektors zurück. Diese ist für v=(a,b) definiert
+	 * als a+b .
+	 * @return	Die Summe von delta X und delta Y des Vektors.
+	 */
+	public float manhattanLength() {
+		float v = x + y;
+		return v < 0 ? -v : v;
+	}
 }
