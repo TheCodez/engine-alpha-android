@@ -22,7 +22,7 @@ package ea.edu;
 import ea.Dreieck;
 import ea.Punkt;
 import ea.android.GameActivity;
-import ea.android.GameInstanz;
+import ea.android.Spiel;
 import ea.android.GameSzenenActivity;
 
 /**
@@ -42,13 +42,13 @@ public class DreieckE extends Dreieck {
 		super(new Punkt(100, 100), new Punkt(200, 100), new Punkt(150, 50));
 		farbeSetzen("Gruen");
 		
-		if(GameInstanz.get() instanceof GameActivity)
+		if(Spiel.instanz() instanceof GameActivity)
 		{
-			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+			((GameActivity)(Spiel.instanz())).wurzel.add(this);
 		}	
-		else if(GameInstanz.get() instanceof GameActivity && ((GameSzenenActivity)(GameInstanz.get())).szeneGeben() != null)
+		else if(Spiel.instanz() instanceof GameActivity && ((GameSzenenActivity)(Spiel.instanz())).szeneGeben() != null)
 		{
-			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+			((GameSzenenActivity)(Spiel.instanz())).szeneGeben().hinzufuegen(this);
 		}
 	}
 

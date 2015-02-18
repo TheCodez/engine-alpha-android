@@ -2,7 +2,7 @@ package ea.edu;
 
 import ea.*;
 import ea.android.GameActivity;
-import ea.android.GameInstanz;
+import ea.android.Spiel;
 import ea.android.GameSzenenActivity;
 
 @Deprecated
@@ -17,13 +17,13 @@ public class TextE extends Text {
 		super(140, 100, content);
 		farbeSetzen("Gruen");
 		
-		if(GameInstanz.get() instanceof GameActivity)
+		if(Spiel.instanz() instanceof GameActivity)
 		{
-			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+			((GameActivity)(Spiel.instanz())).wurzel.add(this);
 		}	
 		else
 		{
-			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+			((GameSzenenActivity)(Spiel.instanz())).szeneGeben().hinzufuegen(this);
 		}
 	}
 }

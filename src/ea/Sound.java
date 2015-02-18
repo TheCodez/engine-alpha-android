@@ -5,7 +5,7 @@ import java.io.IOException;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import ea.android.GameInstanz;
+import ea.android.Spiel;
 
 public class Sound 
 {
@@ -14,7 +14,7 @@ public class Sound
 	
 	public Sound(String datei) 
 	{
-		player = GameInstanz.get().mediaPlayerGeben();
+		player = Spiel.instanz().mediaPlayerGeben();
         
 		setzeSound(datei);
 	}
@@ -23,7 +23,7 @@ public class Sound
 	{
         try 
         {
-        	AssetFileDescriptor descriptor = GameInstanz.get().getAssets().openFd(datei);
+        	AssetFileDescriptor descriptor = Spiel.instanz().getAssets().openFd(datei);
         	long start = descriptor.getStartOffset();
         	long end = descriptor.getLength();
         	

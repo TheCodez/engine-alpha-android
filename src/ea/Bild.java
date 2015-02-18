@@ -7,7 +7,7 @@ import android.content.res.AssetManager;
 import android.graphics.*;
 import android.net.Uri;
 import ea.android.GameActivity;
-import ea.android.GameInstanz;
+import ea.android.Spiel;
 import ea.internal.collision.Collider;
 
 @SuppressWarnings("serial")
@@ -27,7 +27,7 @@ public class Bild extends Raum {
 	private void bitmapLaden(String name)
 	{
 		try {
-	        AssetManager assetManager = GameInstanz.get().zeichner.getContext().getAssets();
+	        AssetManager assetManager = Spiel.instanz().zeichnerGeben().getContext().getAssets();
 	        InputStream inputStream = assetManager.open(name);
 	        
 	        bmp = BitmapFactory.decodeStream(inputStream);

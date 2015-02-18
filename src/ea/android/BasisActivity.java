@@ -27,7 +27,7 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 {
 	private static final long serialVersionUID = 2024202201493570532L;
 
-	public Zeichner zeichner;	
+	protected Zeichner zeichner;	
 	public Kamera cam;
 	
 	protected Manager manager;

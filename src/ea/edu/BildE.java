@@ -2,7 +2,7 @@ package ea.edu;
 
 import ea.Bild;
 import ea.android.GameActivity;
-import ea.android.GameInstanz;
+import ea.android.Spiel;
 import ea.android.GameSzenenActivity;
 
 /**
@@ -19,13 +19,13 @@ public class BildE extends Bild {
 	public BildE(int x, int y, String pfad) {
 		super(x, y, pfad);
 
-		if(GameInstanz.get() instanceof GameActivity)
+		if(Spiel.instanz() instanceof GameActivity)
 		{
-			((GameActivity)(GameInstanz.get())).wurzel.add(this);
+			((GameActivity)(Spiel.instanz())).wurzel.add(this);
 		}	
-		else if(GameInstanz.get() instanceof GameActivity && ((GameSzenenActivity)(GameInstanz.get())).szeneGeben() != null)
+		else if(Spiel.instanz() instanceof GameActivity && ((GameSzenenActivity)(Spiel.instanz())).szeneGeben() != null)
 		{
-			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+			((GameSzenenActivity)(Spiel.instanz())).szeneGeben().hinzufuegen(this);
 		}
 	}
 }
