@@ -42,10 +42,12 @@ public class KreisE extends Kreis {
 		farbeSetzen("Blau");
 
 		if(GameInstanz.get() instanceof GameActivity)
+		{
 			((GameActivity)(GameInstanz.get())).wurzel.add(this);
-		else if(((GameSzenenActivity)(GameInstanz.get())).szeneGeben() == null)
-			((GameSzenenActivity)(GameInstanz.get())).wurzel.add(this);
-		else
+		}	
+		else if(GameInstanz.get() instanceof GameActivity && ((GameSzenenActivity)(GameInstanz.get())).szeneGeben() != null)
+		{
 			((GameSzenenActivity)(GameInstanz.get())).szeneGeben().hinzufuegen(this);
+		}
 	}
 }

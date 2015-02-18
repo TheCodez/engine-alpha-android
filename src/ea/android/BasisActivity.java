@@ -34,8 +34,8 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	
 	protected final Random zufall = new Random();
 	
-	public int breite;
-	public int hoehe;
+	protected int breite;
+	protected int hoehe;
 	
 	public boolean tick;
 	protected int intervall;
@@ -44,7 +44,7 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	protected Sensor sensor;
 	protected Vibrator vibrator;
 	
-	public MediaPlayer mediaPlayer;
+	protected MediaPlayer mediaPlayer;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -155,6 +155,22 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 		return zeichner;
 	}
 	
+	public MediaPlayer mediaPlayerGeben()
+	{
+		return mediaPlayer;
+	}
+	
+	public int breite()
+	{
+		return breite;
+	}
+	
+	public int hoehe()
+	{
+		return hoehe;
+
+	}
+	
 	public boolean zufallsBoolean() 
 	{
 		return zufall.nextBoolean();
@@ -169,15 +185,16 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 		return zufall.nextInt(obergrenze + 1);
 	}
 	public void titelSetzen(String titel)
-	{
-		
+	{	
 		setTitle(titel);
 	}
 	
 	public void hintergrundFarbeSetzen(Farbe farbe)
 	{
 		if(zeichner != null)
+		{
 			zeichner.hintergrundFarbeSetzen(farbe);
+		}
 	}
 	
 	public void vibrieren(long milliSekunden)
@@ -188,9 +205,13 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	public void setzeBildschirmOrientierung(BildOrientierung orientation)
 	{
 		if(orientation == BildOrientierung.Landschaft)
+		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
 		else
+		{
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
 	}
 
 	
@@ -225,12 +246,10 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void tick() {
-		// TODO Auto-generated method stub
 		
 	}
 	

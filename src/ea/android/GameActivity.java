@@ -19,8 +19,6 @@ public abstract class GameActivity extends BasisActivity
 		
 	private static GameActivity instanz;
 	
-	public boolean tick;
-	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
 	{

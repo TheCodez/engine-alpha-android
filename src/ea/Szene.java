@@ -65,11 +65,14 @@ public class Szene extends Raum
 	@Override
 	public BoundingRechteck dimension() 
 	{
+		int breite = 0, hoehe = 0;
+		
 		for(Raum r : wurzel.alleElemente())
 		{
-			return r.dimension();
+			breite += r.dimension().breite;
+			hoehe += r.dimension().hoehe;
 		}
-		return new BoundingRechteck(0, 0, 0, 0);
+		return new BoundingRechteck(position.x, position.y, breite, hoehe);
 	}
 
 	@Override

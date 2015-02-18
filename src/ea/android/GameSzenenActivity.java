@@ -12,11 +12,7 @@ public abstract class GameSzenenActivity extends BasisActivity
 
 	private Szene aktuelleSzene;
 	
-	public Knoten wurzel;
-	
 	private static GameSzenenActivity instanz;
-	
-	public boolean tick;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -27,22 +23,8 @@ public abstract class GameSzenenActivity extends BasisActivity
         
 		aktuelleSzene = init();
 		
-		if(aktuelleSzene == null)
-		{
-			aktuelleSzene = new Szene();
-		}
-		
 		cam.wurzel().add(aktuelleSzene.wurzel);
-		
-		
-		//@todo wurzel von GameSzenenActvity entfernen
-		for(Raum r : wurzel.alleElemente())
-		{
-			if(r != null)
-				aktuelleSzene.hinzufuegen(r);
-			wurzel.leeren();
-		}
-		
+				
 		setContentView(zeichner);
 	}
 	
@@ -79,7 +61,7 @@ public abstract class GameSzenenActivity extends BasisActivity
     	}
     }
 	
-	public void touchReagieren(float x, float y, TouchEvent event)
+	public final void touchReagieren(float x, float y, TouchEvent event)
 	{
 		if(aktuelleSzene != null)
 		{
@@ -87,7 +69,7 @@ public abstract class GameSzenenActivity extends BasisActivity
 		}
 	}
 	
-	public void sensorReagieren(float x, float y, float z, Sensor sensor)
+	public final void sensorReagieren(float x, float y, float z, Sensor sensor)
 	{
 		if(aktuelleSzene != null)
 		{
@@ -95,7 +77,7 @@ public abstract class GameSzenenActivity extends BasisActivity
 		}
 	}
 	
-	public void tasteGedruecktReagieren(int code)
+	public final void tasteGedruecktReagieren(int code)
 	{
 		if(aktuelleSzene != null)
 		{
@@ -103,7 +85,7 @@ public abstract class GameSzenenActivity extends BasisActivity
 		}
 	}
 	
-	public void tasteLosgelassenReagieren(int code)
+	public final void tasteLosgelassenReagieren(int code)
 	{
 		if(aktuelleSzene != null)
 		{
