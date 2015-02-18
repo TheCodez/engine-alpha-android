@@ -2,8 +2,8 @@
 Eine veränderte Version der Engine-Alpha für die Android-Plattform
 
 ## Verwendung:
-1. Die [engine-alpha-android.jar](https://github.com/skatermichi/engine-alpha-android/releases/download/0.9/engine-alpha-android.jar) hier, oder im Release Tab herunterladen.
-2. Danach die engine-alpha-android.jar in den "libs" Ordner des Projekts kopieren.
+1. Die Engine-Alpha Android [hier](https://github.com/skatermichi/engine-alpha-android/releases/download/0.9/engine-alpha-android.jar), oder im Releases Tab herunterladen.
+2. Danach die engine-alpha-android.jar in den "libs" Ordner deines Projekts kopieren.
 
 ## Grundlegendes Beispiel
 ```java
