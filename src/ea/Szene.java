@@ -10,7 +10,7 @@ import ea.internal.collision.Collider;
 public class Szene extends Raum
 {
 	public Knoten wurzel;
-	private Farbe hintergrundFarbe;
+	private Farbe hintergrundFarbe = Farbe.Schwarz;
 	
 	private GameSzenenActivity game;
 	

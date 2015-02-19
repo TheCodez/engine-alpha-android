@@ -162,14 +162,9 @@ public class Zeichner extends View
 			
 			if(gsa.szeneGeben() != null)
 			{
-				if(gsa.szeneGeben().hintergrundFarbeGeben() != null)
-				{
-					g.drawColor(gsa.szeneGeben().hintergrundFarbeGeben().alsInt());
-				}
+				g.drawColor(gsa.szeneGeben().hintergrundFarbeGeben().alsInt());
 			}
-		}
-		
-		
+		}	
 		
 		if(cam != null)
 			cam.zeichne(g);
