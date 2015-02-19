@@ -6,9 +6,11 @@ import ea.android.GameSzenenActivity;
 import ea.android.TouchEvent;
 import ea.internal.collision.Collider;
 
+@SuppressWarnings("serial")
 public class Szene extends Raum
 {
 	public Knoten wurzel;
+	private Farbe hintergrundFarbe;
 	
 	private GameSzenenActivity game;
 	
@@ -29,6 +31,11 @@ public class Szene extends Raum
 	public void entfernen(Raum raum)
 	{
 		wurzel.entfernen(raum);
+	}
+	
+	public void leeren()
+	{
+		wurzel.leeren();
 	}
 	
 	public void tick()
@@ -84,6 +91,14 @@ public class Szene extends Raum
 	public GameSzenenActivity game()
 	{
 		return game;
+	}
+
+	public Farbe hintergrundFarbeGeben() {
+		return hintergrundFarbe;
+	}
+
+	public void hintergrundFarbeSetze(Farbe hintergrundFarbe) {
+		this.hintergrundFarbe = hintergrundFarbe;
 	}
 
 }

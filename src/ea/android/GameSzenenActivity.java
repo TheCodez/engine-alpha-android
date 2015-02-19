@@ -10,7 +10,7 @@ public abstract class GameSzenenActivity extends BasisActivity
 {
 	private static final long serialVersionUID = -3983748994386821131L;
 
-	private Szene aktuelleSzene;
+	protected Szene aktuelleSzene;
 	
 	private static GameSzenenActivity instanz;
 	

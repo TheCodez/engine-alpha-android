@@ -152,7 +152,24 @@ public class Zeichner extends View
 	{
 		super.onDraw(g);
 		
-		g.drawColor(hintergrundFarbe.alsInt());
+		if(getContext() instanceof GameActivity)
+		{
+			g.drawColor(hintergrundFarbe.alsInt());
+		}
+		else if(getContext() instanceof GameSzenenActivity)
+		{
+			GameSzenenActivity gsa = ((GameSzenenActivity)getContext());
+			
+			if(gsa.szeneGeben() != null)
+			{
+				if(gsa.szeneGeben().hintergrundFarbeGeben() != null)
+				{
+					g.drawColor(gsa.szeneGeben().hintergrundFarbeGeben().alsInt());
+				}
+			}
+		}
+		
+		
 		
 		if(cam != null)
 			cam.zeichne(g);

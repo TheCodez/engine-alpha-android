@@ -1,6 +1,7 @@
 package ea.android;
 
 import android.os.Bundle;
+import ea.Farbe;
 import ea.Knoten;
 import ea.Raum;
 
@@ -37,6 +38,14 @@ public abstract class GameActivity extends BasisActivity
 	public static GameActivity get()
 	{
 		return instanz;
+	}
+	
+	public void hintergrundFarbeSetzen(Farbe farbe)
+	{
+		if(zeichner != null)
+		{
+			zeichner.hintergrundFarbeSetzen(farbe);
+		}
 	}
 	
 	public void uiElementHinzufuegen(Raum m)

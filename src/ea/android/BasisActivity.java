@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 import ea.Farbe;
 import ea.Kamera;
@@ -50,6 +52,11 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
     protected void onCreate(Bundle savedInstanceState) 
 	{
         super.onCreate(savedInstanceState);
+        
+        // Vollbild erzwingen
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         
         breite = getWindowManager().getDefaultDisplay().getWidth();
         hoehe = getWindowManager().getDefaultDisplay().getHeight();
@@ -187,14 +194,6 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	public void titelSetzen(String titel)
 	{	
 		setTitle(titel);
-	}
-	
-	public void hintergrundFarbeSetzen(Farbe farbe)
-	{
-		if(zeichner != null)
-		{
-			zeichner.hintergrundFarbeSetzen(farbe);
-		}
 	}
 	
 	public void vibrieren(long milliSekunden)
