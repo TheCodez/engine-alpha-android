@@ -1,5 +1,6 @@
 package ea.android;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import ea.Manager;
 import ea.Ticker;
 import ea.internal.gra.Zeichenebene;
 import ea.internal.gra.Zeichner;
+import ea.ui.UIElement;
 
 public class BasisActivity extends Activity implements Ticker, SensorEventListener
 {
@@ -181,6 +183,11 @@ public class BasisActivity extends Activity implements Ticker, SensorEventListen
 	public boolean zufallsBoolean() 
 	{
 		return zufall.nextBoolean();
+	}
+	
+	public ArrayList<UIElement> uiElemente()
+	{
+		return null;
 	}
 
 	

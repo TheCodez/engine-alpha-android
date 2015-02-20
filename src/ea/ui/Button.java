@@ -2,22 +2,17 @@ package ea.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import ea.Bild;
 import ea.BoundingRechteck;
-import ea.Farbe;
-import ea.Manager;
 import ea.Punkt;
-import ea.Raum;
 import ea.Text;
-import ea.Ticker;
 import ea.Vektor;
 import ea.internal.collision.Collider;
+import ea.internal.util.Logger;
 
-public class Button extends Raum
-{
-
+public class Button extends UIElement
+{	
 	private ButtonAktion b;
 	
 	private boolean istGedrueckt;
@@ -42,15 +37,15 @@ public class Button extends Raum
 				buttonText = new Text(mittelPunkt().x - 82, mittelPunkt().y, bd.text, 82);
 				hatText = true;
 			}
-			
 		}
 		else
 		{
-			Log.e(getClass().getName(), "Buttondefinition ist unvollstaendig");
+			Logger.error("Buttondefinition ist unvollstaendig");
 		}
 		
 	}
 	
+	@Override
 	public void touch(float x, float y, MotionEvent event)
 	{
 		if(sichtbar())

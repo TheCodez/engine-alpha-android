@@ -1,9 +1,12 @@
 package ea.android;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import ea.Farbe;
 import ea.Knoten;
 import ea.Raum;
+import ea.ui.UIElement;
 
 enum BildOrientierung
 {
@@ -68,4 +71,19 @@ public abstract class GameActivity extends BasisActivity
 	 *  Diese Methode muss in unterklassen ueberschrieben werden
 	 */
 	public abstract void init();
+
+	@Override
+	public ArrayList<UIElement> uiElemente() {
+		ArrayList<UIElement> ui = new ArrayList<UIElement>();
+		
+		for(Raum u : uiWurzel.alleElemente())
+		{
+			if(u instanceof UIElement)
+			{
+				ui.add((UIElement)u);
+			}
+		}
+		
+		return ui;
+	}
 }

@@ -1,10 +1,13 @@
 package ea.android;
 
+import java.util.ArrayList;
+
 import android.hardware.Sensor;
 import android.os.Bundle;
 import ea.Knoten;
 import ea.Raum;
 import ea.Szene;
+import ea.ui.UIElement;
 
 public abstract class GameSzenenActivity extends BasisActivity
 {
@@ -91,5 +94,23 @@ public abstract class GameSzenenActivity extends BasisActivity
 		{
 			aktuelleSzene.tasteLosgelassenReagieren(code);
 		}
+	}
+	
+	@Override
+	public ArrayList<UIElement> uiElemente() {
+		ArrayList<UIElement> ui = new ArrayList<UIElement>();
+		
+		if(aktuelleSzene != null)
+		{
+			for(Raum u : aktuelleSzene.wurzel.alleElemente())
+			{
+				if(u instanceof UIElement)
+				{
+					ui.add((UIElement)u);
+				}
+			}
+		}
+		
+		return ui;
 	}
 }

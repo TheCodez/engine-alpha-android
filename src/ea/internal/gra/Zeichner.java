@@ -22,8 +22,10 @@ package ea.internal.gra;
 import ea.*;
 import ea.android.GameActivity;
 import ea.android.GameSzenenActivity;
+import ea.android.Spiel;
 import ea.android.TouchEvent;
 import ea.ui.Button;
+import ea.ui.UIElement;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -167,7 +169,9 @@ public class Zeichner extends View
 		}	
 		
 		if(cam != null)
+		{
 			cam.zeichne(g);
+		}
 		
 		invalidate();
 	}
@@ -177,37 +181,21 @@ public class Zeichner extends View
 	{
 		super.onTouchEvent(event);
 		
-		
 		if(getContext() instanceof GameActivity)
 		{
 			((GameActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
-			
-			// Testet ein touch event fuer Knöpfe
-			for(Raum b : ((GameActivity)getContext()).uiWurzel.alleElemente())
-			{
-				if(b instanceof Button)
-				{
-					((Button)b).touch(event.getX(), event.getY(), event);
-				}
-			}
 		}
 		else if(getContext() instanceof GameSzenenActivity)
 		{
 			((GameSzenenActivity)getContext()).touchReagieren(event.getX(), event.getY(), touchEventConvertieren(event));
-			
-			// Testet ein touch event fuer Knöpfe
-			for(Raum b : ((GameSzenenActivity)getContext()).szeneGeben().wurzel.alleElemente())
-			{
-				if(b instanceof Button)
-				{
-					((Button)b).touch(event.getX(), event.getY(), event);
-				}
-			}
 		}
 		
-		
-		
-		
+		// Testet ein touch event fuer Knöpfe
+		for(UIElement u : Spiel.instanz().uiElemente())
+		{
+			u.touch(event.getX(), event.getY(), event);
+		}
+
 		return true;
 	}
 	
@@ -216,9 +204,13 @@ public class Zeichner extends View
 		TouchEvent e = TouchEvent.Keins;
 		
 		if(event.getAction() == MotionEvent.ACTION_DOWN)
+		{
 			e = TouchEvent.Gedrueckt;
+		}
 		else if(event.getAction() == MotionEvent.ACTION_UP)
+		{
 			e = TouchEvent.Losgelassen;
+		}
 		
 		return e;
 	}
