@@ -19,7 +19,6 @@ public abstract class GameActivity extends BasisActivity
 	private static final long serialVersionUID = -4408577037715253942L;
 
 	public Knoten wurzel;
-	public Knoten uiWurzel;
 		
 	private static GameActivity instanz;
 	
@@ -29,7 +28,6 @@ public abstract class GameActivity extends BasisActivity
         super.onCreate(savedInstanceState);
         
         cam.wurzel().add(wurzel = new Knoten());
-		cam.wurzel().add(uiWurzel = new Knoten());
         
         setContentView(zeichner);
         
@@ -51,17 +49,9 @@ public abstract class GameActivity extends BasisActivity
 		}
 	}
 	
-	public void uiElementHinzufuegen(Raum m)
+	public void hinzufuegen(Raum m)
 	{
-		if(!uiWurzel.besitzt(m) && !wurzel.besitzt(m))
-		{
-			uiWurzel.add(m);
-		}
-	}
-	
-	public void raumHinzufuegen(Raum m)
-	{
-		if(!wurzel.besitzt(m) && !uiWurzel.besitzt(m))
+		if(!wurzel.besitzt(m))
 		{
 			wurzel.add(m);
 		}
@@ -76,7 +66,7 @@ public abstract class GameActivity extends BasisActivity
 	public ArrayList<UIElement> uiElemente() {
 		ArrayList<UIElement> ui = new ArrayList<UIElement>();
 		
-		for(Raum u : uiWurzel.alleElemente())
+		for(Raum u : wurzel.alleElemente())
 		{
 			if(u instanceof UIElement)
 			{
