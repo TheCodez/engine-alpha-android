@@ -25,6 +25,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import ea.internal.util.Logger;
+
 /**
  * Der Manager ist eine Standardklasse und eine der wichtigsten der Engine Alpha, die zur Interaktion ausserhalb der engine benutzt werden kann.<br />
  * Neben einer Liste aller moeglichen Fonts handelt er auch das <b>Ticker-System</b>.
@@ -190,14 +192,14 @@ public class Manager {
 	 */
 	public void starten(final Ticker t, int intervall) {
 		if (!istAngemeldet(t)) {
-			//Logger.error("Der Ticker ist noch nicht angemeldet.");
+			Logger.error("Der Ticker ist noch nicht angemeldet.");
 			return;
 		}
 		
 		Job job = getJob(t);
 		
 		if (job.active) {
-			//Logger.error("Ticker ist bereits am Laufen!");
+			Logger.error("Ticker ist bereits am Laufen!");
 			return;
 		}
 		
@@ -223,7 +225,7 @@ public class Manager {
 	 */
 	public void anhalten(Ticker t) {
 		if (!istAngemeldet(t)) {
-			//Logger.error("Der Ticker ist noch nicht angemeldet.");
+			Logger.error("Der Ticker ist noch nicht angemeldet.");
 			return;
 		}
 		
@@ -245,7 +247,7 @@ public class Manager {
 	 */
 	public void intervallSetzen(Ticker t, int intervall) {
 		if (!istAngemeldet(t)) {
-			//Logger.error("Der Ticker ist noch nicht angemeldet.");
+			Logger.error("Der Ticker ist noch nicht angemeldet.");
 			return;
 		}
 		
@@ -272,7 +274,7 @@ public class Manager {
 	 */
 	public void abmelden(Ticker t) {
 		if (!istAngemeldet(t)) {
-			//Logger.error("Der Ticker ist noch nicht angemeldet.");
+			Logger.error("Der Ticker ist noch nicht angemeldet.");
 			return;
 		}
 		

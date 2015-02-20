@@ -21,6 +21,7 @@ package ea;
 
 import ea.edu.net.NetzwerkInterpreter;
 import ea.internal.net.DiscoveryServer;
+import ea.internal.util.Logger;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -107,7 +108,7 @@ public class Server extends Thread implements Empfaenger, SenderInterface {
 		try {
 			this.socket = new ServerSocket(port);
 		} catch (IOException e) {
-			//Logger.error("Konnte keinen Server aufstellen. Ausreichend Rechte vorhanden?\n");
+			Logger.error("Konnte keinen Server aufstellen. Ausreichend Rechte vorhanden?\n");
 			e.printStackTrace();
 		}
 
@@ -128,13 +129,13 @@ public class Server extends Thread implements Empfaenger, SenderInterface {
 				// Check for initial message.
 				String init = br.readLine();
 				if (init.length() < 1 || !init.startsWith("xe")) {
-					//Logger.error("Client gefunden! Dieser hat sich aber falsch angemeldet! " + "Kommt er sicher von der EA?");
+					Logger.error("Client gefunden! Dieser hat sich aber falsch angemeldet! " + "Kommt er sicher von der EA?");
 					continue;
 				}
 
 				String name;
 				if (init.length() == 1) {
-					//Logger.error("Client hat sich angemeldet, jedoch keinen Namen hinterlassen. " + "Verbindung wird trotzdem aufgebaut.");
+					Logger.error("Client hat sich angemeldet, jedoch keinen Namen hinterlassen. " + "Verbindung wird trotzdem aufgebaut.");
 					name = "";
 				} else {
 					name = init.substring(2);
@@ -191,7 +192,7 @@ public class Server extends Thread implements Empfaenger, SenderInterface {
 					waitingQueue.notifyAll();
 				}
 			} catch (IOException e) {
-				//Logger.error("Beim Herstellen einer Verbindung ist ein Input/Output - Fehler aufgetreten.");
+				Logger.error("Beim Herstellen einer Verbindung ist ein Input/Output - Fehler aufgetreten.");
 			}
 		}
 	}
@@ -341,7 +342,7 @@ public class Server extends Thread implements Empfaenger, SenderInterface {
 			try {
 				socket.close();
 			} catch (IOException e) {
-				//Logger.error("Konnte den Verbindungs-Socket nicht mehr schliessen.");
+				Logger.error("Konnte den Verbindungs-Socket nicht mehr schliessen.");
 			}
 		}
 	}
@@ -441,7 +442,7 @@ public class Server extends Thread implements Empfaenger, SenderInterface {
 			try {
 				socket.close();
 			} catch (IOException e) {
-				//Logger.error("Konnte den Verbindungs-Socket nicht mehr schliessen.");
+				Logger.error("Konnte den Verbindungs-Socket nicht mehr schliessen.");
 			}
 		}
 	}
