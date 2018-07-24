@@ -17,10 +17,10 @@ public class TestActivity extends GameActivity
 	@Override
 	public void init() 
 	{
-        box = new Rechteck(180, 320, 120, 120);
-        box.farbeSetzen(Farbe.Gruen);
-        
-        wurzel.add(box);
+		box = new Rechteck(180, 320, 120, 120);
+		box.farbeSetzen(Farbe.Gruen);
+
+		wurzel.add(box);
 	}
 }
 ```
@@ -54,11 +54,11 @@ public class TestActivity extends GameActivity
     @Override
     public void touchReagieren(float x, float y, TouchEvent event)
 	{
-		if(event == TouchEvent.Gedrueckt)
+		if (event == TouchEvent.Gedrueckt)
 		{
 			box.sichtbarSetzen(false);
 		}
-		else if(event == TouchEvent.Losgelassen)
+		else if (event == TouchEvent.Losgelassen)
 		{
 			box.sichtbarSetzen(true);
 		}
@@ -87,11 +87,11 @@ public class TestActivity extends GameSzenenActivity
 		Szene szene = new Szene();
 		
 		box = new Rechteck(180, 320, 120, 120);
-        box.farbeSetzen(Farbe.Gruen);
+		box.farbeSetzen(Farbe.Gruen);
 		
-        szene.hinzufuegen(box);
+		szene.hinzufuegen(box);
         
-        return szene;
+		return szene;
 	}
 }
 ```
